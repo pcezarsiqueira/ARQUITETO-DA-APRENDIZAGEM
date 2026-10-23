@@ -40,3 +40,9 @@ A comparação offline inclui o primeiro resultado, a revisão técnica e o resu
 Executar a conferência pelo botão “Iniciar conferência sem IA”, completar relações, investigar alertas e salvar. A revisão para piloto requer capacidades conferidas, desempenho relacionado, decisões explícitas, limitações e aprovação humana do diagnóstico. Mudanças no conteúdo invalidam a atualidade, preservando os registros. `npm run evaluate:consistency` e testes não exigem credenciais.
 
 A revisão assistida usa `PEDAGOGICAL_REVIEW_ENABLED` e `PEDAGOGICAL_REVIEW_ACCESS_TOKEN` próprios; não habilitar nem consumir custo sem autorização. Mantida desativada nesta entrega. [Configuração, orçamento e limites](pedagogical-consistency.md). Nenhuma alteração em main ou publicação está autorizada.
+
+## Fase 3 e piloto assistido
+
+A Fase 2 foi aprovada restritamente e integrada pelo PR nº 1; ver `validation/phase2/assisted-pilot-approval.md`. IA revisora continua desativada. No projeto, “Abrir Mapa de Transformação” leva ao editor. Pode-se adaptar o exemplo sem alterar o original, construir do diagnóstico aprovado ou começar manualmente. Salve versões explicitamente; a exportação existente inclui posições, relações e histórico.
+
+Para revisar mudança de origem, compare os registros no aviso do mapa, ajuste manualmente, registre justificativa e confirme a revisão da origem. Depois reveja os elementos e aprove se apropriado. Restaurar uma versão cria um novo rascunho. Não publicar ou iniciar Fase 4 sem autorização. Nenhuma operação técnica é exigida do idealizador.

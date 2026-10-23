@@ -1,0 +1,36 @@
+{
+  "phase2MergedPR": 1,
+  "phase2MergeCommit": "6048e8d6f7140d481d3c9e38d3b6837e67cf60db",
+  "phase2Approval": "Piloto assistido com revisão humana obrigatória; sem autorização pública.",
+  "phase3Branch": "feat/transformation-map",
+  "paidCalls": 0,
+  "reviewAIEnabled": false,
+  "localChecks": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "build": "passed",
+    "domainIntegrationTests": 55,
+    "browserTests": 40,
+    "pedagogyEvaluation": "offline passed",
+    "consistencyEvaluation": "offline passed"
+  },
+  "screenshots": [
+    {
+      "file": "map-desktop.png",
+      "sha256": "fc963f16d1d317896247da6bde9c797609b46f83ef0c6284468b810168d901f4",
+      "origin": "Captura real da aplicação local no Chromium/Playwright; cenário fictício, sem nova geração de IA."
+    },
+    {
+      "file": "map-mobile.png",
+      "sha256": "4c2524813e3f1e851708997f7e0e51677b30bf305c0d57e3a24685d53c95d181",
+      "origin": "Captura real da aplicação local no Chromium/Playwright; cenário fictício, sem nova geração de IA."
+    },
+    {
+      "file": "map-mobile-editor.png",
+      "sha256": "dfdb6bf3fcdeeaf2490232e406996e8bb76118b58e93b8489db5a3c92b4fe282",
+      "origin": "Captura real da aplicação local no Chromium/Playwright; cenário fictício, sem nova geração de IA."
+    }
+  ],
+  "mobileScope": "Viewport emulado no Chromium, não aparelho físico.",
+  "demonstration": "Mapa editorial original adaptado explicitamente em rascunho; edições manuais e conexões realizadas pela UI, originais preservados."
+}

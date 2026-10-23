@@ -1,3 +1,4 @@
+import { visualMapSchema } from "@/domain/visual-map";
 import { diagnosisSchema } from "@/domain/diagnosis";
 import { z } from "zod";
 import { discoverySchema, type Project } from "@/domain/models";
@@ -57,6 +58,7 @@ const project: z.ZodType<Project> = z.object({
   diagnosis: diagnosisSchema.optional(),
   diagnosisHistory: z.array(diagnosisSchema).max(10).optional(),
   maps: z.array(map),
+  visualMap: visualMapSchema.optional(),
   strategies: z.array(strategy),
   deliverables: z.array(deliverable),
   validation: z

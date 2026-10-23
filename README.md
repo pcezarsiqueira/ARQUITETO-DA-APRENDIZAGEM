@@ -9,9 +9,9 @@ Transforme conhecimento especializado em experiências de aprendizagem estrutura
 - Persistência validada no navegador, reabertura, duplicação, exclusão com confirmação e exportação JSON.
 - Exemplo fictício completo sobre feedback construtivo: diagnóstico editorial, mapa, estratégia, plano de aula, storyboard e revisão pedagógica.
 - Entidades tipadas e contratos separados para domínio, motor pedagógico, integração de IA, persistência e entregáveis.
-- Regra de identificação de materiais desatualizados por versão do mapa, coberta por testes; o editor visual será implementado em fase posterior.
+- Regra de identificação de materiais desatualizados por versão do mapa, com editor visual implementado na Fase 3.
 
-**Este projeto ainda não é o MVP completo.** O diagnóstico assistido por IA está implementado. PostgreSQL/Prisma, autenticação individual, mapa editável com aprovação, geração/edição de entregáveis e validação automatizada ainda não estão implementados. O exemplo é somente leitura; a descoberta pode ser editada, sem regenerar os materiais demonstrativos. Os dados ficam no navegador atual e não são sincronizados entre dispositivos. Não use informações sensíveis em computadores compartilhados. A exportação gera um backup JSON; importação ainda não disponível.
+**Este projeto ainda não é o MVP completo.** O diagnóstico assistido por IA está implementado. PostgreSQL/Prisma, autenticação individual, geração/edição de entregáveis e validação dos entregáveis ainda não estão implementados. O mapa visual é editável e versionado; os materiais editoriais continuam somente leitura e não são regenerados automaticamente. Os dados ficam no navegador atual e não são sincronizados entre dispositivos. Não use informações sensíveis em computadores compartilhados. A exportação gera um backup JSON; importação ainda não disponível.
 
 ## Diagnóstico assistido por IA
 
@@ -73,4 +73,12 @@ Verificação adicional sem custo de API: `npm run evaluate:pedagogy`.
 
 A Fase 2 agora oferece rastreabilidade entre capacidades do objetivo, competências, evidências e critérios, com correção manual e decisões justificadas sobre alertas. Uma aprovação anterior do texto não equivale à nova revisão para piloto. A verificação/sugestão opcional por IA tem autorização e orçamento separados, permanece desativada e não foi chamada nesta revisão.
 
-Veja o [relatório executivo e critérios de aceite](docs/validation/phase2/consistency-executive-report.md) e a [arquitetura da consistência](docs/pedagogical-consistency.md). A recomendação atual é piloto assistido do caminho manual, sem alegar qualidade universal ou eficácia e sem aprovação retroativa dos diagnósticos reais. Não houve publicação ou avanço de fase. Avaliação sem custo: `npm run evaluate:consistency`.
+Veja o [relatório executivo e critérios de aceite](docs/validation/phase2/consistency-executive-report.md) e a [arquitetura da consistência](docs/pedagogical-consistency.md). O responsável aprovou a Fase 2 para piloto assistido com revisão humana obrigatória, e o PR nº 1 foi integrado à main após os checks. Isso não alega qualidade universal ou eficácia nem aprova retroativamente os diagnósticos reais. A Fase 3 foi autorizada separadamente; não houve publicação. Avaliação sem custo: `npm run evaluate:consistency`.
+
+## Fase 3 — Mapa de Transformação
+
+Editor espacial com cartões e conexões tipadas, arraste, teclado, lista acessível no celular, zoom e organização por etapas. Permite criar a partir do diagnóstico aprovado, começar manualmente ou adaptar explicitamente um mapa editorial anterior. Mostra fonte e natureza de cada elemento; hipóteses não se tornam fatos ao aceitar a proposta.
+
+Salva conteúdo, posições, conexões, enquadramento e revisões imutáveis; restauração cria outra versão. Mudanças na descoberta/diagnóstico sinalizam desatualização sem substituir decisões. A aprovação requer revisão humana, desempenho relacionado e justificativa. Os mapas editoriais originais e entregáveis continuam preservados. Não há novas chamadas de IA ou geradores nesta fase.
+
+Veja [arquitetura e limites](docs/phase3/architecture.md), [relatório e capturas reais](docs/phase3/delivery.md) e [aprovação restrita da Fase 2](docs/validation/phase2/assisted-pilot-approval.md). A Fase 4 não está autorizada.

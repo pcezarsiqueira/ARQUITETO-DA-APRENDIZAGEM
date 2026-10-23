@@ -13,6 +13,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import { MapEditor } from "@/modules/transformation-map/map-editor";
 import { DiagnosisPanel } from "@/modules/diagnosis/components/diagnosis-panel";
 import { Brand } from "@/shared/components/brand";
 import {
@@ -87,14 +88,22 @@ export function ProjectDashboard() {
   const dialog = useRef<HTMLDialogElement>(null);
   const storageRevision = useRef<string | null>(null);
   const diagnosisDirty = useRef(false);
+  const mapDirty = useRef(false);
+  const onMapDirty = useCallback((dirty: boolean) => {
+    mapDirty.current = dirty;
+  }, []);
   const onDiagnosisDirty = useCallback((dirty: boolean) => {
     diagnosisDirty.current = dirty;
   }, []);
   function canLeaveDiagnosis() {
     return (
-      !diagnosisDirty.current ||
+      (!diagnosisDirty.current && !mapDirty.current) ||
       confirm(
-        "Há uma revisão de diagnóstico não salva. Deseja sair e descartar essas alterações?",
+        mapDirty.current && diagnosisDirty.current
+          ? "Há alterações no mapa e na revisão do diagnóstico ainda não salvas. Deseja sair e descartar ambas?"
+          : mapDirty.current
+            ? "Há alterações no mapa ainda não salvas. Deseja sair e descartá-las?"
+            : "Há uma revisão de diagnóstico não salva. Deseja sair e descartar essas alterações?",
       )
     );
   }
@@ -245,6 +254,12 @@ export function ProjectDashboard() {
             >
               Editar descoberta
             </button>
+            <a
+              href="#mapa-transformacao"
+              className="ml-3 inline-block text-sm font-semibold text-teal-800"
+            >
+              Abrir Mapa de Transformação ↓
+            </a>
             <section className="grid gap-3 md:grid-cols-2">
               {fields.map((f) => (
                 <article
@@ -306,6 +321,20 @@ export function ProjectDashboard() {
                 </div>
               </section>
             )}
+            <MapEditor
+              key={`map:${active.id}:${JSON.stringify(active.discovery)}`}
+              project={active}
+              onDirtyChange={onMapDirty}
+              onSave={(visualMap) =>
+                persist(
+                  projects.map((p) =>
+                    p.id === active.id
+                      ? { ...p, visualMap, updatedAt: new Date().toISOString() }
+                      : p,
+                  ),
+                )
+              }
+            />
             {active.maps.map((map) => (
               <section
                 key={map.version}
@@ -380,6 +409,10 @@ export function ProjectDashboard() {
                 <h2 className="text-xl font-semibold">{d.title}</h2>
                 <p className="mt-2 text-xs text-stone-500">
                   Derivado do mapa v{d.mapVersion} · exemplo para leitura
+                  {active.visualMap &&
+                  active.visualMap.revisions.at(-1)!.version !== d.mapVersion
+                    ? " · desatualizado em relação ao mapa visual; não atualizado automaticamente"
+                    : ""}
                 </p>
                 <div className="mt-4 space-y-3">
                   {d.sections.map((s) => (

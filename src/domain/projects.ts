@@ -24,6 +24,11 @@ export function duplicateProject(
 ): Project {
   return {
     ...structuredClone(project),
+    ...(project.visualMap
+      ? {
+          visualMap: { ...structuredClone(project.visualMap), id: `map-${id}` },
+        }
+      : {}),
     id,
     title: `${project.title} (cópia)`,
     updatedAt: now,

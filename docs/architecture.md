@@ -20,9 +20,9 @@ Sem autenticação individual ou PostgreSQL nesta fase. Diagnóstico de IA dispo
 ## Fases e critérios atuais
 
 1. Fundação: concluída e publicada no repositório, sem implantação pública.
-2. Diagnóstico assistido por IA: implementação e testes locais nesta branch. O primeiro teste e o teste V2 tiveram uma geração real cada, em autorizações distintas, com jornadas de revisão verificadas; encerramento integral ainda não é recomendado pelos achados em `docs/validation/phase2/v2-real/report.md`.
-3. Mapa editável: somente após validar a fase 2. Histórico imutável, aprovação humana e rastreabilidade.
-4. Arquitetura pedagógica: estratégias justificadas e seleção pelo especialista.
+2. Diagnóstico assistido por IA: aprovado pelo responsável para piloto assistido com revisão humana obrigatória; PR nº 1 integrado à main após os checks. Os dois resultados reais e suas limitações continuam preservados e não recebem aprovação universal. Ver `validation/phase2/assisted-pilot-approval.md`.
+3. Mapa editável: autorizado e implementado em branch própria após consolidar a Fase 2. Histórico imutável, aprovação humana e rastreabilidade. Ver `phase3/architecture.md`.
+4. Arquitetura pedagógica: estratégias justificadas e seleção pelo especialista. Requer nova autorização; não iniciada.
 5. Plano de aula e storyboard: edição por cena e atualização seletiva por versão do mapa; demais formatos futuros.
 6. Validação pedagógica: justificativas e recomendações distintas de resultados empíricos.
 
@@ -60,3 +60,9 @@ Mapas, estratégias e entregáveis permanecem separados e não foram desenvolvid
 A geração não foi ampliada para assumir toda a validação. `pedagogical-engine/consistency` mantém contratos opcionais e funções puras; `ConsistencyPanel` registra relações e decisões humanas. `server/pedagogical-review` implementa uma revisão/sugestão opcional separada, desativada e com orçamento próprio. Não há equivalência entre verificação estrutural, julgamento semântico e eficácia de aprendizagem. A prontidão para piloto é calculada sobre uma conferência atual, fontes válidas, relações justificadas e revisão humana explícita; aprovações legadas não são promovidas automaticamente. [Detalhes e critérios](pedagogical-consistency.md).
 
 Os oito critérios do responsável permitem piloto assistido do diagnóstico/revisão manual com limites documentados; isso não aprova pedagogicamente os dois registros reais nem inicia a Fase 3. O uso público/multiusuário ainda exige evolução de plataforma.
+
+## Mapa visual versionado — Fase 3
+
+`domain/visual-map.ts` define contratos Zod de nós, relações e revisões; `map-operations.ts` implementa importação explícita, rastreabilidade, desatualização, aprovação, projeção para futuros consumidores e restauração. `modules/transformation-map/map-editor.tsx` implementa o editor espacial e a lista acessível. `Project.visualMap` opcional preserva o envelope local v1, sem alterar `Project.maps` ou entregáveis existentes. Revisões têm versões superiores às legadas; mudanças marcam entregáveis antigos como desatualizados, sem regenerá-los.
+
+Sem grafo artificial obrigatório para todos os tipos: evidência e critério são exigidos para competências; dependências adicionais podem ser justificadamente dispensadas. Aceitação de nós não converte a natureza de hipóteses automaticamente. [Decisões e limites](phase3/architecture.md).

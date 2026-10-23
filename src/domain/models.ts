@@ -1,3 +1,4 @@
+import type { VisualMap } from "./visual-map";
 import type { Diagnosis } from "./diagnosis";
 export type { Diagnosis } from "./diagnosis";
 import { z } from "zod";
@@ -72,6 +73,7 @@ export type Project = {
   diagnosis?: Diagnosis;
   diagnosisHistory?: Diagnosis[];
   maps: TransformationMap[];
+  visualMap?: VisualMap;
   strategies: Strategy[];
   deliverables: Deliverable[];
   validation?: ValidationReport;

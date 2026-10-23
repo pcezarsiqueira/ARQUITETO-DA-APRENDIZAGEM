@@ -8,6 +8,7 @@ import {
   type Diagnosis,
   type DiagnosisOutput,
 } from "@/domain/diagnosis";
+import { ConsistencyPanel } from "./consistency-panel";
 import { StructuredDiagnosisEditor } from "./structured-diagnosis-editor";
 import { adaptLegacyDiagnosis } from "@/domain/adapt-diagnosis";
 import { evaluateDiagnosis } from "@/domain/diagnosis-rubric";
@@ -88,7 +89,9 @@ export function DiagnosisPanel({
     : undefined;
   const [token, setToken] = useState("");
   const [consent, setConsent] = useState(false);
-  const [busy, setBusy] = useState(false);
+  const [generating, setBusy] = useState(false);
+  const [reviewBusy, setReviewBusy] = useState(false);
+  const busy = generating || reviewBusy;
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [dirty, setDirty] = useState(false);
@@ -340,13 +343,13 @@ export function DiagnosisPanel({
         onClick={generate}
         className="mt-4 rounded-lg bg-teal-800 px-5 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {busy
+        {generating
           ? "Analisando descoberta…"
           : proposal
             ? "Gerar nova proposta"
             : "Analisar com IA"}
       </button>
-      {busy && (
+      {generating && (
         <p role="status" className="mt-3 text-sm">
           Preparando hipóteses. Seu diagnóstico salvo será preservado.
         </p>
@@ -553,6 +556,13 @@ export function DiagnosisPanel({
               className="mt-2 w-full rounded-lg border border-stone-300 p-3 text-sm font-normal"
             />
           </label>
+          <ConsistencyPanel
+            diagnosis={proposal}
+            discovery={project.discovery}
+            disabled={busy}
+            onChange={(consistency) => edit({ ...proposal, consistency })}
+            onBusy={setReviewBusy}
+          />
           <div className="mt-5 flex flex-wrap gap-3">
             <button
               disabled={

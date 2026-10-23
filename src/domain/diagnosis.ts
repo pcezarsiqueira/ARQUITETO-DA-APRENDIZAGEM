@@ -6,6 +6,7 @@ import {
   invalidReferences,
   type PedagogicalAnalysis,
 } from "./pedagogical-analysis";
+import { consistencyReviewSchema } from "@/pedagogical-engine/consistency/contracts";
 import { evaluateDiagnosis } from "./diagnosis-rubric";
 import { z } from "zod";
 import { discoverySchema, type Discovery } from "./models";
@@ -41,6 +42,7 @@ export const diagnosisSchema = z.object({
       rationale: legacyText,
     })
     .optional(),
+  consistency: consistencyReviewSchema.optional(),
   pedagogy: pedagogicalDraftSchema.optional(),
   generatedPedagogy: pedagogicalDraftSchema.optional(),
   pedagogyOrigin: z.enum(["ai", "technical_adaptation"]).optional(),

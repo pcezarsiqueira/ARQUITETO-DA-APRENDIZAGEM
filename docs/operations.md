@@ -34,3 +34,9 @@ Integração de código e publicação são operações distintas. Não criar ap
 A avaliação offline usa `npm run evaluate:pedagogy` e a suíte de regressão, sem chave ou chamadas pagas. O teste real V2 consumiu sua autorização específica em uma geração, preservada em [validation/phase2/v2-real/report.md](validation/phase2/v2-real/report.md). A marca `/tmp/arquiteto-live-analysis-v2-attempted` não deve ser apagada; o roteiro recusa outra tentativa. A autorização anterior não vale para uma terceira geração. Um futuro roteiro deve exigir autorização nova e marcador próprio, sem apagar registros existentes.
 
 A comparação offline inclui o primeiro resultado, a revisão técnica e o resultado V2 real. O endpoint só envia a descoberta, não respostas de referência. Antes do envio, o roteiro confere igualdade da descoberta com o primeiro registro. Campos completos não equivalem a aprovação pedagógica: a avaliação encontrou omissão de acordos, viabilidade não demonstrada e pergunta que presume treinamento anterior. Não integrar main, publicar ou iniciar Fase 3. O responsável não precisa executar operações técnicas para acessar o relatório.
+
+## Consistência sem novas chamadas
+
+Executar a conferência pelo botão “Iniciar conferência sem IA”, completar relações, investigar alertas e salvar. A revisão para piloto requer capacidades conferidas, desempenho relacionado, decisões explícitas, limitações e aprovação humana do diagnóstico. Mudanças no conteúdo invalidam a atualidade, preservando os registros. `npm run evaluate:consistency` e testes não exigem credenciais.
+
+A revisão assistida usa `PEDAGOGICAL_REVIEW_ENABLED` e `PEDAGOGICAL_REVIEW_ACCESS_TOKEN` próprios; não habilitar nem consumir custo sem autorização. Mantida desativada nesta entrega. [Configuração, orçamento e limites](pedagogical-consistency.md). Nenhuma alteração em main ou publicação está autorizada.

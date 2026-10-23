@@ -1,0 +1,399 @@
+{
+  "scope": "Regras de cobertura registrada e alertas conservadores; interpretação de significado exige julgamento humano ou proposta assistida opcional. Não mede eficácia.",
+  "paidCalls": 0,
+  "real": [
+    {
+      "file": "diagnosis-original.json",
+      "capabilityCandidates": [
+        {
+          "id": "objective-1",
+          "label": "específica",
+          "sourceQuote": "específica",
+          "origin": "rule_candidate"
+        },
+        {
+          "id": "objective-2",
+          "label": "respeitosa",
+          "sourceQuote": "respeitosa",
+          "origin": "rule_candidate"
+        },
+        {
+          "id": "objective-3",
+          "label": "orientada a acordos",
+          "sourceQuote": "orientada a acordos",
+          "origin": "rule_candidate"
+        }
+      ],
+      "findings": [
+        {
+          "id": "legacy-structure",
+          "kind": "reference",
+          "certainty": "objective_check",
+          "title": "Registro anterior sem evidências estruturadas",
+          "detail": "O texto original está preservado; não há campos separados para rastrear desempenho.",
+          "correction": "Organize o registro sem IA e complete os campos manualmente."
+        },
+        {
+          "id": "coverage:objective-1",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: específica",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        },
+        {
+          "id": "coverage:objective-2",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: respeitosa",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        },
+        {
+          "id": "coverage:objective-3",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: orientada a acordos",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        },
+        {
+          "id": "emotion-certainty",
+          "kind": "assumption",
+          "certainty": "heuristic_alert",
+          "title": "Uma explicação emocional pode estar sendo tratada como fato",
+          "detail": "A linguagem parece estabelecer uma causa emocional não demonstrada pela descoberta.",
+          "correction": "Separe comportamento relatado de explicações possíveis e registre o que falta investigar."
+        },
+        {
+          "id": "legacy-time-barrier",
+          "kind": "constraint",
+          "certainty": "heuristic_alert",
+          "title": "Tempo da oficina não é característica do aprendiz",
+          "detail": "O registro anterior mistura restrição operacional com barreira de aprendizagem.",
+          "correction": "Mova o limite para o planejamento em uma revisão, preservando o original."
+        }
+      ],
+      "investigation": {
+        "prompts": [
+          {
+            "kind": "Familiaridade presumida",
+            "basis": "Conduzir uma conversa específica, respeitosa e orientada a acordos.",
+            "question": "Que exemplos e contraexemplos mostram o que esses termos significam em uma ação concreta?"
+          },
+          {
+            "kind": "Etapas intermediárias e saltos",
+            "basis": "Conduzir uma conversa específica, respeitosa e orientada a acordos.",
+            "question": "Que passos ligam a situação inicial ao resultado? Há alguma decisão intermediária que só o especialista sabe tomar?"
+          },
+          {
+            "kind": "Conhecimento tácito",
+            "basis": "Conduzir uma conversa específica, respeitosa e orientada a acordos.",
+            "question": "Que sinais você usa para decidir que o resultado é adequado? Demonstre um caso suficiente e um insuficiente."
+          }
+        ],
+        "proposedKinds": [],
+        "limitation": "Perguntas de investigação, não dificuldades comprovadas. Não é necessário preencher todas as categorias."
+      },
+      "pilot": {
+        "ready": false,
+        "reasons": [
+          "Inicie ou atualize a conferência para esta versão do diagnóstico."
+        ]
+      }
+    },
+    {
+      "file": "v2-real/diagnosis-original.json",
+      "capabilityCandidates": [
+        {
+          "id": "objective-1",
+          "label": "específica",
+          "sourceQuote": "específica",
+          "origin": "rule_candidate"
+        },
+        {
+          "id": "objective-2",
+          "label": "respeitosa",
+          "sourceQuote": "respeitosa",
+          "origin": "rule_candidate"
+        },
+        {
+          "id": "objective-3",
+          "label": "orientada a acordos",
+          "sourceQuote": "orientada a acordos",
+          "origin": "rule_candidate"
+        }
+      ],
+      "findings": [
+        {
+          "id": "agreement-performance",
+          "kind": "objective",
+          "certainty": "heuristic_alert",
+          "title": "O objetivo pede acordos: onde o aprendiz os demonstra?",
+          "detail": "No caso conhecido, a evidência e o critério só descrevem clareza e respeito. A busca por sinais de acordo é um alerta conservador, não um avaliador semântico universal.",
+          "correction": "Defina um desempenho negociado observável ou explique como a evidência existente o demonstra. Repetir a palavra acordo não confirma cobertura."
+        },
+        {
+          "id": "coverage:objective-1",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: específica",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        },
+        {
+          "id": "coverage:objective-2",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: respeitosa",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        },
+        {
+          "id": "coverage:objective-3",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: orientada a acordos",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        },
+        {
+          "id": "feasibility:0",
+          "kind": "feasibility",
+          "certainty": "heuristic_alert",
+          "title": "Viabilidade da competência 1 exige fundamento",
+          "detail": "Informar duração ou declarar que cabe não mostra quanto tempo a prática e a devolutiva exigem. A regra é conservadora; confira as informações disponíveis.",
+          "correction": "Registre a base concreta ou marque a viabilidade como ainda não verificada."
+        },
+        {
+          "id": "vague:0",
+          "kind": "criterion",
+          "certainty": "heuristic_alert",
+          "title": "Explique o que conta como sucesso na competência 1",
+          "detail": "Há qualificadores que podem ser interpretados de modos diferentes. A presença deles não torna todo o critério inválido.",
+          "correction": "Mostre indicadores, exemplos e contraexemplos que um observador consiga distinguir."
+        },
+        {
+          "id": "previous:3",
+          "kind": "assumption",
+          "certainty": "heuristic_alert",
+          "title": "A pergunta 4 pode presumir experiência anterior",
+          "detail": "A pergunta parece depender de uma experiência que não foi expressamente informada. Uma pergunta sobre se houve experiência é diferente de presumir que houve.",
+          "correction": "Pergunte primeiro se a experiência ocorreu ou retire a pressuposição."
+        },
+        {
+          "id": "scope-mediation",
+          "kind": "scope",
+          "certainty": "heuristic_alert",
+          "title": "O diagnóstico pode ampliar o objetivo para mediação de conflitos",
+          "detail": "Mediação aparece no diagnóstico, mas não está expressa no objetivo. Pode ser contexto legítimo, não é erro comprovado.",
+          "correction": "Justifique o vínculo ou delimite a competência ao feedback informado."
+        },
+        {
+          "id": "operational-assumption:1",
+          "kind": "assumption",
+          "certainty": "heuristic_alert",
+          "title": "Uma restrição pode ter sido ampliada sem informação",
+          "detail": "Duplas e material impresso não comprovam indisponibilidade de plenária ou recursos digitais.",
+          "correction": "Retire a proibição inferida ou marque a informação como pendente."
+        }
+      ],
+      "investigation": {
+        "prompts": [
+          {
+            "kind": "Familiaridade presumida",
+            "basis": "Conduzir uma conversa específica, respeitosa e orientada a acordos.",
+            "question": "Que exemplos e contraexemplos mostram o que esses termos significam em uma ação concreta?"
+          },
+          {
+            "kind": "Etapas intermediárias e saltos",
+            "basis": "Conduzir uma conversa específica, respeitosa e orientada a acordos.",
+            "question": "Que passos ligam a situação inicial ao resultado? Há alguma decisão intermediária que só o especialista sabe tomar?"
+          },
+          {
+            "kind": "Conhecimento tácito",
+            "basis": "Conduzir uma conversa específica, respeitosa e orientada a acordos.",
+            "question": "Que sinais você usa para decidir que o resultado é adequado? Demonstre um caso suficiente e um insuficiente."
+          }
+        ],
+        "proposedKinds": [
+          "familiarity"
+        ],
+        "limitation": "Perguntas de investigação, não dificuldades comprovadas. Não é necessário preencher todas as categorias."
+      },
+      "pilot": {
+        "ready": false,
+        "reasons": [
+          "Inicie ou atualize a conferência para esta versão do diagnóstico."
+        ]
+      }
+    }
+  ],
+  "additional": [
+    {
+      "subject": "Redes de computadores",
+      "capabilityCandidates": [
+        {
+          "id": "objective-1",
+          "label": "Configurar uma rede local",
+          "sourceQuote": "Configurar uma rede local",
+          "origin": "rule_candidate"
+        },
+        {
+          "id": "objective-2",
+          "label": "verificar a conectividade entre dois computadores.",
+          "sourceQuote": "verificar a conectividade entre dois computadores.",
+          "origin": "rule_candidate"
+        }
+      ],
+      "findings": [
+        {
+          "id": "coverage:objective-1",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: Configurar uma rede local",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        },
+        {
+          "id": "coverage:objective-2",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: verificar a conectividade entre dois computadores.",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        }
+      ],
+      "pilot": {
+        "ready": false,
+        "reasons": [
+          "Inicie ou atualize a conferência para esta versão do diagnóstico."
+        ]
+      }
+    },
+    {
+      "subject": "Circuitos elétricos",
+      "capabilityCandidates": [
+        {
+          "id": "objective-1",
+          "label": "Calcular a corrente em um circuito resistivo",
+          "sourceQuote": "Calcular a corrente em um circuito resistivo",
+          "origin": "rule_candidate"
+        },
+        {
+          "id": "objective-2",
+          "label": "justificar a escolha da equação.",
+          "sourceQuote": "justificar a escolha da equação.",
+          "origin": "rule_candidate"
+        }
+      ],
+      "findings": [
+        {
+          "id": "coverage:objective-1",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: Calcular a corrente em um circuito resistivo",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        },
+        {
+          "id": "coverage:objective-2",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: justificar a escolha da equação.",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        }
+      ],
+      "pilot": {
+        "ready": false,
+        "reasons": [
+          "Inicie ou atualize a conferência para esta versão do diagnóstico."
+        ]
+      }
+    },
+    {
+      "subject": "Consultas SQL",
+      "capabilityCandidates": [
+        {
+          "id": "objective-1",
+          "label": "Escrever uma consulta SQL",
+          "sourceQuote": "Escrever uma consulta SQL",
+          "origin": "rule_candidate"
+        },
+        {
+          "id": "objective-2",
+          "label": "testar o resultado em uma base de treinamento.",
+          "sourceQuote": "testar o resultado em uma base de treinamento.",
+          "origin": "rule_candidate"
+        }
+      ],
+      "findings": [
+        {
+          "id": "coverage:objective-1",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: Escrever uma consulta SQL",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        },
+        {
+          "id": "coverage:objective-2",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: testar o resultado em uma base de treinamento.",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        }
+      ],
+      "pilot": {
+        "ready": false,
+        "reasons": [
+          "Inicie ou atualize a conferência para esta versão do diagnóstico."
+        ]
+      }
+    },
+    {
+      "subject": "Leitura crítica",
+      "capabilityCandidates": [
+        {
+          "id": "objective-1",
+          "label": "Comparar as fontes de uma notícia",
+          "sourceQuote": "Comparar as fontes de uma notícia",
+          "origin": "rule_candidate"
+        },
+        {
+          "id": "objective-2",
+          "label": "justificar uma conclusão sobre a confiabilidade.",
+          "sourceQuote": "justificar uma conclusão sobre a confiabilidade.",
+          "origin": "rule_candidate"
+        }
+      ],
+      "findings": [
+        {
+          "id": "coverage:objective-1",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: Comparar as fontes de uma notícia",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        },
+        {
+          "id": "coverage:objective-2",
+          "kind": "objective",
+          "certainty": "objective_check",
+          "title": "Falta demonstrar: justificar uma conclusão sobre a confiabilidade.",
+          "detail": "A relação objetivo → competência → evidência → critério ainda está ausente, parcial ou sem revisão atual.",
+          "correction": "Vincule trechos verificáveis e explique como demonstram esta capacidade; se faltar desempenho, edite a competência."
+        }
+      ],
+      "pilot": {
+        "ready": false,
+        "reasons": [
+          "Inicie ou atualize a conferência para esta versão do diagnóstico."
+        ]
+      }
+    }
+  ],
+  "conclusion": "Os dois resultados reais exigem revisão de cobertura. Casos offline mostram rastreabilidade, não aprovação pedagógica universal."
+}

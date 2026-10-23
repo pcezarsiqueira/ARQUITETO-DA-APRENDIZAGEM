@@ -54,3 +54,9 @@ Autorização por código compartilhado e quotas globais em memória atendem à 
 `domain/pedagogical-analysis.ts` separa contrato de geração completa de rascunho editável; `diagnosis-rubric.ts` aplica regras determinísticas sem eficácia numérica; `adapt-diagnosis.ts` adapta explicitamente registros anteriores, sem inventar evidência ou gravar durante leitura. A interface estruturada preserva proposta original da geração V2 e rejeições. Aprovação exige campos completos, fontes válidas, viabilidade e revisão humana justificada dos sete critérios.
 
 Mapas, estratégias e entregáveis permanecem separados e não foram desenvolvidos nesta revisão. A comparação editorial inicial usou uma revisão técnica sem geração. Posteriormente, uma geração V2 expressamente autorizada foi preservada em `validation/phase2/v2-real`, com testes offline de revisão e análise crítica; os dois tipos de registro permanecem distintos. [Detalhes do contrato e limites](phase2-structured-diagnosis.md).
+
+## Camada de consistência e critérios de piloto (Fase 2)
+
+A geração não foi ampliada para assumir toda a validação. `pedagogical-engine/consistency` mantém contratos opcionais e funções puras; `ConsistencyPanel` registra relações e decisões humanas. `server/pedagogical-review` implementa uma revisão/sugestão opcional separada, desativada e com orçamento próprio. Não há equivalência entre verificação estrutural, julgamento semântico e eficácia de aprendizagem. A prontidão para piloto é calculada sobre uma conferência atual, fontes válidas, relações justificadas e revisão humana explícita; aprovações legadas não são promovidas automaticamente. [Detalhes e critérios](pedagogical-consistency.md).
+
+Os oito critérios do responsável permitem piloto assistido do diagnóstico/revisão manual com limites documentados; isso não aprova pedagogicamente os dois registros reais nem inicia a Fase 3. O uso público/multiusuário ainda exige evolução de plataforma.

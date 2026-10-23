@@ -68,3 +68,9 @@ O novo contrato distingue bases informadas, hipóteses, inferências fracas, res
 Veja a [comparação entre o diagnóstico real e a revisão técnica](docs/validation/phase2/pedagogical-refinement-v2.md) e o [contrato, compatibilidade e rubrica](docs/phase2-structured-diagnosis.md). A revisão V2 foi elaborada tecnicamente com os dados preservados: não é uma segunda geração de IA. O teste real posterior do motor V2 foi concluído com uma geração adicional expressamente autorizada. Veja o [relatório V2 com a resposta efetiva e avaliação crítica](docs/validation/phase2/v2-real/report.md): a estrutura melhorou, mas a aprovação pedagógica integral ainda não é recomendada. Não há nova geração autorizada.
 
 Verificação adicional sem custo de API: `npm run evaluate:pedagogy`.
+
+## Conferência independente e piloto assistido
+
+A Fase 2 agora oferece rastreabilidade entre capacidades do objetivo, competências, evidências e critérios, com correção manual e decisões justificadas sobre alertas. Uma aprovação anterior do texto não equivale à nova revisão para piloto. A verificação/sugestão opcional por IA tem autorização e orçamento separados, permanece desativada e não foi chamada nesta revisão.
+
+Veja o [relatório executivo e critérios de aceite](docs/validation/phase2/consistency-executive-report.md) e a [arquitetura da consistência](docs/pedagogical-consistency.md). A recomendação atual é piloto assistido do caminho manual, sem alegar qualidade universal ou eficácia e sem aprovação retroativa dos diagnósticos reais. Não houve publicação ou avanço de fase. Avaliação sem custo: `npm run evaluate:consistency`.

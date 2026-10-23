@@ -84,3 +84,7 @@ A marca da primeira geração não foi apagada. O roteiro V2 usa uma marca disti
 O responsável autorizou expressamente uma única nova geração com o contrato V2. Ela foi executada com descoberta idêntica, sem resposta técnica de referência, e está integralmente preservada em [validation/phase2/v2-real/report.md](validation/phase2/v2-real/report.md). A autorização está consumida; a marca V2 permanece e nenhuma repetição foi realizada. Os parágrafos anteriores que indicavam pendência descrevem o estado histórico anterior a esse teste.
 
 Edição, rejeição, complementação, revisão, aprovação de mecanismo e reabertura foram testadas com o resultado, incluindo replay offline em desktop/celular. A avaliação substantiva não recomenda aprovação pedagógica integral: estrutura válida não garante cobertura dos objetivos, perguntas sem pressuposições ou viabilidade. Não houve integração à main nem publicação. Qualquer geração futura requer nova autorização específica.
+
+## Conferência independente após a geração
+
+A geração permanece com seu contrato e limites existentes. A camada de consistência não altera seu prompt. Ela oferece relações confirmadas por humanos e alertas determinísticos, mais uma integração opcional distinta para revisão/sugestão sem substituição automática. Essa integração tem token de acesso próprio, uma chamada/minuto, três/24h, uma simultânea, até 2.000 tokens, timeout de 45s e zero retentativas. Continua desativada e não recebeu nenhuma chamada real nesta implementação. [Contrato, configuração e limites](pedagogical-consistency.md).

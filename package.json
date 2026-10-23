@@ -14,7 +14,8 @@
     "test": "node --conditions=react-server --import tsx --test tests/*.test.ts",
     "test:e2e": "playwright test",
     "setup:local": "node scripts/prepare-local-env.mjs",
-    "evaluate:pedagogy": "tsx scripts/evaluate-pedagogy.ts"
+    "evaluate:pedagogy": "tsx scripts/evaluate-pedagogy.ts",
+    "evaluate:consistency": "tsx scripts/evaluate-consistency.ts"
   },
   "dependencies": {
     "@next/env": "^16.4.2",

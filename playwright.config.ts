@@ -9,6 +9,14 @@ export default defineConfig({
   },
   webServer: {
     command: "npm start",
+    // Never spend real API credits in automated browser tests.
+    env: {
+      AI_PROVIDER_API_KEY: "",
+      OPENAI_API_KEY: "",
+      DIAGNOSIS_ACCESS_TOKEN: "",
+      PEDAGOGICAL_REVIEW_ENABLED: "false",
+      PEDAGOGICAL_REVIEW_ACCESS_TOKEN: "",
+    },
     url: "http://127.0.0.1:3000",
     reuseExistingServer: false,
   },

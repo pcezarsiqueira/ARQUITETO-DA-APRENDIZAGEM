@@ -1,0 +1,26 @@
+{
+  "provider": "OpenAI Responses API",
+  "model": "gpt-4.1-mini",
+  "generationAttempts": 1,
+  "apiHttpStatus": 200,
+  "workflow": {
+    "edited": true,
+    "draftSaved": true,
+    "reopened": true,
+    "approvalMechanism": true,
+    "approvalReopened": true
+  },
+  "historyLength": 2,
+  "originalSha256": "c5264275275072725fe94be8445a60c7edd154dc2724fdadc47c28afe4c00aff",
+  "approvalScope": "Aprovação automatizada de teste em projeto fictício; não é aprovação pedagógica do responsável.",
+  "billingAmount": "Não coletado; não estimado.",
+  "providerRequestId": "Não disponibilizado pelo endpoint atual.",
+  "localChecks": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "build": "passed",
+    "domainAndIntegrationTestsPassed": 17,
+    "browserTestsPassed": 16,
+    "additionalGenerationsDuringRegression": 0
+  }
+}

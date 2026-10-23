@@ -1,0 +1,52 @@
+{
+  "provider": "OpenAI Responses API",
+  "model": "gpt-4.1-mini",
+  "generatedAt": "2026-10-23T13:34:46.265Z",
+  "apiHttpStatus": 200,
+  "generationAttemptsThisAuthorization": 1,
+  "originalSha256": "4d2147104c0631545436c45526509981015d2726e41785d397b1bc69d266e0d4",
+  "modelOutputSha256": "31e7793ba1a071bea2106bf0d0c5b5031ad6826250c8bddf8440e078b5d00c8f",
+  "discoveryIdenticalToFirstTest": true,
+  "inputSent": "Somente specialistKnowledge com os oito campos da descoberta; sem revisão técnica, resposta original ou histórico. As instruções gerais do motor contêm exemplos pedagógicos.",
+  "instructionsSha256": "360dd9be467881235819ef8e85f2e63b5fe498db093ccc06daababb4000b7106",
+  "sourceCommit": "7a9bbe7e22a5dc3fdeafb382b53a33ca33e4f15c",
+  "maxOutputTokens": 6000,
+  "automaticRetries": 0,
+  "workflowLive": {
+    "edited": true,
+    "draftSaved": true,
+    "reopened": true,
+    "approvalMechanism": true,
+    "approvalReopened": true
+  },
+  "historyLength": 2,
+  "approvalScope": "Aprovação automatizada exclusiva do mecanismo, em projeto fictício; não substitui aprovação pedagógica do responsável.",
+  "providerEnvelope": "O endpoint não expõe o envelope HTTP original do provedor, ID de requisição ou uso de tokens. O objeto estruturado completo recebido do modelo está preservado sem edições em model-output-original.json.",
+  "billingAmount": "Não coletado; não estimado.",
+  "subsequentPaidCalls": 0,
+  "localChecks": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "build": "passed",
+    "domainAndIntegrationTestsPassed": 34,
+    "browserTestsPassed": 24,
+    "offlineRubric": "passed; structural checks do not establish pedagogical approval",
+    "additionalGenerationsDuringRegression": 0
+  },
+  "workflowOffline": {
+    "desktop": "passed",
+    "mobile": "passed",
+    "edited": true,
+    "rejectedAndArchived": true,
+    "supplemented": true,
+    "draftReopened": true,
+    "unresolvedFeasibilityBlockedApproval": true,
+    "explicitReviewRequired": true,
+    "testApprovalReopened": true,
+    "laterEditWithdrewApproval": true,
+    "originalGeneratedObjectUnchanged": true,
+    "discoveryUnchanged": true,
+    "mapsAndDeliverablesUnchanged": true,
+    "generationRequests": 0
+  }
+}

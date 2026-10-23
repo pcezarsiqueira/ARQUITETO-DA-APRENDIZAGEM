@@ -1,0 +1,210 @@
+{
+  "scope": "Verificação estrutural offline; não mede eficácia nem comprova aprendizagem.",
+  "generationCalls": 0,
+  "originalOrigin": "Diagnóstico da única análise real preservada; adaptação incompleta apenas para aplicar regras, sem alterar o original.",
+  "revisionOrigin": "Revisão técnica baseada no registro e no relatório; não foi gerada pela OpenAI com o novo contrato.",
+  "labels": {
+    "grounding": "Fundamentação das hipóteses",
+    "separation": "Fatos e inferências",
+    "observability": "Ações observáveis",
+    "criteria": "Critérios de sucesso",
+    "questions": "Perguntas que mudam decisões",
+    "assumptions": "Pressupostos ocultos",
+    "feasibility": "Público e restrições"
+  },
+  "original": {
+    "blocking": [
+      "Revise Conhecimento prévio · 1 · fundamentação: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Conhecimento prévio · 1 · pergunta de verificação: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Conhecimento prévio · 2 · fundamentação: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Conhecimento prévio · 2 · pergunta de verificação: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Hipótese: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Restrição · 1 · efeito no planejamento: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Restrição · 2 · efeito no planejamento: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 1 · condição: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 1 · evidência de desempenho: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 1 · critério de sucesso: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 1 · justificativa do critério: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 1 · relação com objetivo: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 1 · viabilidade · justificativa: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 1 · fundamentação: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 2 · condição: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 2 · evidência de desempenho: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 2 · critério de sucesso: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 2 · justificativa do critério: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 2 · relação com objetivo: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 2 · viabilidade · justificativa: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 2 · fundamentação: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 3 · condição: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 3 · evidência de desempenho: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 3 · critério de sucesso: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 3 · justificativa do critério: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 3 · relação com objetivo: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 3 · viabilidade · justificativa: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 3 · fundamentação: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 4 · condição: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 4 · evidência de desempenho: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 4 · critério de sucesso: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 4 · justificativa do critério: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 4 · relação com objetivo: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 4 · viabilidade · justificativa: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Competência · 4 · fundamentação: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 1 · informação faltante: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 1 · necessidade: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 1 · mudança na decisão: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 2 · informação faltante: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 2 · necessidade: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 2 · mudança na decisão: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 3 · informação faltante: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 3 · necessidade: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 3 · mudança na decisão: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 4 · informação faltante: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 4 · necessidade: campo obrigatório ou limite de itens/tamanho.",
+      "Revise Pergunta · 4 · mudança na decisão: campo obrigatório ou limite de itens/tamanho.",
+      "Resolva ou rejeite competências cuja viabilidade ainda não foi confirmada."
+    ],
+    "learningEffectivenessScore": null,
+    "findings": [
+      {
+        "criterion": "grounding",
+        "status": "needs_review",
+        "justification": "Há afirmações sem trechos, justificativas ou limites registrados. Complete sem inventar suporte.",
+        "humanJudgment": "Verifique se o trecho realmente sustenta a hipótese e se hipóteses alternativas foram consideradas."
+      },
+      {
+        "criterion": "separation",
+        "status": "needs_review",
+        "justification": "Uma possível barreira menciona restrições operacionais; revise sua classificação.",
+        "humanJudgment": "Confirme que nenhuma frase da justificativa transforma uma hipótese em fato. Essas regras não detectam toda ambiguidade semântica."
+      },
+      {
+        "criterion": "observability",
+        "status": "needs_review",
+        "justification": "Há ação ampla ou verbo mental que exige operacionalização.",
+        "humanJudgment": "Uma pessoa conseguiria observar o comportamento e reconhecer a evidência sem adivinhar a intenção?"
+      },
+      {
+        "criterion": "criteria",
+        "status": "needs_review",
+        "justification": "Faltam critérios de sucesso ou justificativas para verificá-los.",
+        "humanJudgment": "O critério diferencia desempenho suficiente de insuficiente, com exigência proporcional ao objetivo?"
+      },
+      {
+        "criterion": "questions",
+        "status": "needs_review",
+        "justification": "Há perguntas sem decisão explícita ou ainda não foram propostas perguntas de esclarecimento.",
+        "humanJudgment": "A resposta mudaria objetivos, pré-requisitos, atividades ou avaliação? Evite perguntar novamente o que já foi informado."
+      },
+      {
+        "criterion": "assumptions",
+        "status": "needs_review",
+        "justification": "Não há manifestação proposta. Pode ser adequado; requer justificativa e revisão humana, sem forçar invenções.",
+        "humanJudgment": "Revise familiaridade presumida, jargões, saltos, etapas omitidas e saber tácito, incluindo exemplos e explicações alternativas."
+      },
+      {
+        "criterion": "feasibility",
+        "status": "needs_review",
+        "justification": "A relação com o objetivo, as restrições ou a viabilidade ainda precisam ser completadas/revistas.",
+        "humanJudgment": "As ações cabem no tempo, modalidade e recursos sem ampliar silenciosamente o objetivo?"
+      }
+    ]
+  },
+  "technicalRevision": {
+    "blocking": [],
+    "learningEffectivenessScore": null,
+    "findings": [
+      {
+        "criterion": "grounding",
+        "status": "structural_check",
+        "justification": "Trechos, justificativas e limites de inferência estão identificados. Citar um trecho não prova uma relação causal.",
+        "humanJudgment": "Verifique se o trecho realmente sustenta a hipótese e se hipóteses alternativas foram consideradas."
+      },
+      {
+        "criterion": "separation",
+        "status": "structural_check",
+        "justification": "Fatos vêm da descoberta; hipóteses e inferências fracas têm rótulos próprios, e restrições estão separadas.",
+        "humanJudgment": "Confirme que nenhuma frase da justificativa transforma uma hipótese em fato. Essas regras não detectam toda ambiguidade semântica."
+      },
+      {
+        "criterion": "observability",
+        "status": "structural_check",
+        "justification": "Ações têm condição e evidência explicitadas; isso não garante observabilidade real.",
+        "humanJudgment": "Uma pessoa conseguiria observar o comportamento e reconhecer a evidência sem adivinhar a intenção?"
+      },
+      {
+        "criterion": "criteria",
+        "status": "structural_check",
+        "justification": "Critérios e suas justificativas estão declarados, sem pontuação artificial de eficácia.",
+        "humanJudgment": "O critério diferencia desempenho suficiente de insuficiente, com exigência proporcional ao objetivo?"
+      },
+      {
+        "criterion": "questions",
+        "status": "structural_check",
+        "justification": "Cada pergunta declara informação faltante, necessidade, decisão afetada, mudança possível e prioridade.",
+        "humanJudgment": "A resposta mudaria objetivos, pré-requisitos, atividades ou avaliação? Evite perguntar novamente o que já foi informado."
+      },
+      {
+        "criterion": "assumptions",
+        "status": "structural_check",
+        "justification": "Há exemplos ligados ao conteúdo e declaração de que não são ocorrências comprovadas.",
+        "humanJudgment": "Revise familiaridade presumida, jargões, saltos, etapas omitidas e saber tácito, incluindo exemplos e explicações alternativas."
+      },
+      {
+        "criterion": "feasibility",
+        "status": "structural_check",
+        "justification": "Há vínculo declarado com o objetivo e análise de viabilidade; restrições e público precisam ser conferidos com o contexto real.",
+        "humanJudgment": "As ações cabem no tempo, modalidade e recursos sem ampliar silenciosamente o objetivo?"
+      }
+    ]
+  },
+  "realV2Origin": "Resposta integral da única geração V2 autorizada, preservada sem revisão. Avaliação substantiva em v2-real/report.md.",
+  "realV2": {
+    "blocking": [],
+    "learningEffectivenessScore": null,
+    "findings": [
+      {
+        "criterion": "grounding",
+        "status": "structural_check",
+        "justification": "Trechos, justificativas e limites de inferência estão identificados. Citar um trecho não prova uma relação causal.",
+        "humanJudgment": "Verifique se o trecho realmente sustenta a hipótese e se hipóteses alternativas foram consideradas."
+      },
+      {
+        "criterion": "separation",
+        "status": "structural_check",
+        "justification": "Fatos vêm da descoberta; hipóteses e inferências fracas têm rótulos próprios, e restrições estão separadas.",
+        "humanJudgment": "Confirme que nenhuma frase da justificativa transforma uma hipótese em fato. Essas regras não detectam toda ambiguidade semântica."
+      },
+      {
+        "criterion": "observability",
+        "status": "structural_check",
+        "justification": "Ações têm condição e evidência explicitadas; isso não garante observabilidade real.",
+        "humanJudgment": "Uma pessoa conseguiria observar o comportamento e reconhecer a evidência sem adivinhar a intenção?"
+      },
+      {
+        "criterion": "criteria",
+        "status": "structural_check",
+        "justification": "Critérios e suas justificativas estão declarados, sem pontuação artificial de eficácia.",
+        "humanJudgment": "O critério diferencia desempenho suficiente de insuficiente, com exigência proporcional ao objetivo?"
+      },
+      {
+        "criterion": "questions",
+        "status": "structural_check",
+        "justification": "Cada pergunta declara informação faltante, necessidade, decisão afetada, mudança possível e prioridade.",
+        "humanJudgment": "A resposta mudaria objetivos, pré-requisitos, atividades ou avaliação? Evite perguntar novamente o que já foi informado."
+      },
+      {
+        "criterion": "assumptions",
+        "status": "structural_check",
+        "justification": "Há exemplos ligados ao conteúdo e declaração de que não são ocorrências comprovadas.",
+        "humanJudgment": "Revise familiaridade presumida, jargões, saltos, etapas omitidas e saber tácito, incluindo exemplos e explicações alternativas."
+      },
+      {
+        "criterion": "feasibility",
+        "status": "structural_check",
+        "justification": "Há vínculo declarado com o objetivo e análise de viabilidade; restrições e público precisam ser conferidos com o contexto real.",
+        "humanJudgment": "As ações cabem no tempo, modalidade e recursos sem ampliar silenciosamente o objetivo?"
+      }
+    ]
+  },
+  "liveValidationOfV2": "Executada uma geração V2 real; conformidade estrutural verificada, aprovação pedagógica integral não recomendada. Qualquer nova chamada exige outra autorização."
+}

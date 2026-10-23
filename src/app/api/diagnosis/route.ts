@@ -1,5 +1,5 @@
 import "server-only";
-import OpenAI from "openai";
+import { createOpenAIClient } from "@/integrations/ai/client";
 import { getDiagnosisConfig } from "@/server/diagnosis-config";
 import { generateDiagnosis } from "@/integrations/ai/diagnosis";
 import { createDiagnosisHandler } from "@/server/diagnosis-handler";
@@ -14,14 +14,5 @@ export const POST = createDiagnosisHandler({
   getConfig: getDiagnosisConfig,
   limits,
   generate: (apiKey, model, discovery) =>
-    generateDiagnosis(
-      new OpenAI({
-        apiKey,
-        baseURL: "https://api.openai.com/v1",
-        timeout: 45_000,
-        maxRetries: 0,
-      }),
-      model,
-      discovery,
-    ),
+    generateDiagnosis(createOpenAIClient(apiKey), model, discovery),
 });

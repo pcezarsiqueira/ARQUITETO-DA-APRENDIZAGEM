@@ -30,10 +30,18 @@ Implementação revisada e verificações locais aprovadas. A fase 2 NÃO está 
 
 ## Bloqueios externos
 
-A chave `AI_PROVIDER_API_KEY` não está presente no processo e seu requisito no ambiente não possui binding salvo. O acesso local foi preparado automaticamente sem exibir o segredo. O responsável precisa cadastrar a chave no campo seguro do ambiente e autorizar expressamente o custo de uma única análise de teste. Não é necessário editar código, executar comandos ou transmitir segredos pelo chat.
+Na revisão inicial, a chave `AI_PROVIDER_API_KEY` não estava presente no processo e seu requisito no ambiente não possui binding salvo. O acesso local foi preparado automaticamente sem exibir o segredo. O responsável precisa cadastrar a chave no campo seguro do ambiente e autorizar expressamente o custo de uma única análise de teste. Não é necessário editar código, executar comandos ou transmitir segredos pelo chat.
 
 API REST e alternativa GraphQL do GitHub retornaram `Forbidden`. A alternativa web está acessível, mas sem sessão autenticada. Não foram extraídas credenciais do proxy. O envio Git continua disponível; a branch remota preserva as alterações. A integração à `main` fica retida pelo critério de teste real/autorização pendente, independentemente da possibilidade de abrir um PR.
 
 ## Limitações preservadas
 
 Persistência é local ao navegador, não sincronizada. Detecção de conflito entre abas não substitui transação de banco. Acesso por código compartilhado e quotas em memória são controles de revisão desta fase, não infraestrutura comercial multiusuário. Quotas reiniciam com o processo. Aprovação do mecanismo em teste não aprova decisões pedagógicas em nome do idealizador. Mapas e materiais demonstrativos continuam separados e não são gerados nem alterados pelo diagnóstico.
+
+## Continuação: conexão preparada
+
+A chave fornecida pelo responsável foi preparada em arquivo local privado e ignorado, sem exposição de valor. Consultas de leitura sem geração confirmaram autenticação e acesso ao modelo. Foi encontrada e corrigida uma falha no transporte: o cliente Node tentava resolver a API diretamente, ignorando o proxy do ambiente. Agora o cliente utiliza transporte e dispatcher compatíveis com o proxy quando configurado, preservando verificação TLS e sem repetição automática. O próprio cliente atualizado confirmou acesso ao modelo por consulta autenticada de leitura.
+
+Teste de regressão cobre configuração direta e com proxy, reutilização do dispatcher, destino fixo, timeout e ausência de retries. Um roteiro de navegador de tentativa única está preparado; sua execução permanece bloqueada sem autorização de custo. Nenhuma análise real via Responses API foi executada nesta preparação, portanto a fase 2 continua aguardando essa validação e a revisão do resultado.
+
+Verificações após a correção do transporte: lint, TypeScript e build aprovados; 17 testes de domínio/integração e 14 de navegador aprovados, sem falhas ou testes ignorados; auditoria de dependências de produção sem vulnerabilidades reportadas. O acesso de leitura à API do GitHub foi restabelecido nesta continuação, permitindo preparar a abertura do PR em rascunho. A integração à main segue pendente da validação real autorizada.

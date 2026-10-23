@@ -1,3 +1,12 @@
+import {
+  pedagogicalDraftSchema,
+  pedagogicalOutputSchema,
+  projectLegacyAnalysis,
+  rubricIds,
+  invalidReferences,
+  type PedagogicalAnalysis,
+} from "./pedagogical-analysis";
+import { evaluateDiagnosis } from "./diagnosis-rubric";
 import { z } from "zod";
 import { discoverySchema, type Discovery } from "./models";
 const items = z.array(z.string().trim().min(1).max(700)).max(8);
@@ -21,7 +30,30 @@ export const diagnosisSchema = z.object({
   needsValidation: z.array(legacyText).max(100),
   source: z.enum(["demonstration", "ai"]),
   rationale: legacyText,
-  analysis: diagnosisOutputSchema.optional(),
+  analysis: z
+    .object({
+      priorKnowledge: z.array(legacyText).max(100),
+      assumptions: z.array(legacyText).max(100),
+      gaps: z.array(legacyText).max(100),
+      barriers: z.array(legacyText).max(100),
+      competencies: z.array(legacyText).max(100),
+      needsValidation: z.array(legacyText).max(100),
+      rationale: legacyText,
+    })
+    .optional(),
+  pedagogy: pedagogicalDraftSchema.optional(),
+  generatedPedagogy: pedagogicalDraftSchema.optional(),
+  pedagogyOrigin: z.enum(["ai", "technical_adaptation"]).optional(),
+  rejectedItems: z
+    .array(
+      z.object({
+        section: z.string().max(50),
+        data: z.string().max(200000),
+        rejectedAt: z.iso.datetime(),
+      }),
+    )
+    .max(100)
+    .optional(),
   review: z
     .object({
       status: z.enum(["draft", "approved"]),
@@ -31,6 +63,12 @@ export const diagnosisSchema = z.object({
       model: z.string().min(1).max(100),
       approvedAt: z.iso.datetime().optional(),
       editedByHuman: z.boolean(),
+      pedagogicalReview: z
+        .object({
+          reviewedCriteria: z.array(z.enum(rubricIds)).max(7),
+          justification: z.string().max(1400),
+        })
+        .optional(),
     })
     .optional(),
 });
@@ -49,13 +87,21 @@ export function discoveryChanged(a: Discovery, b: Discovery) {
   );
 }
 export function buildDiagnosis(
-  output: DiagnosisOutput,
+  output: DiagnosisOutput | PedagogicalAnalysis,
   discovery: Discovery,
   model: string,
   now: string,
   version = 1,
 ): Diagnosis {
-  const parsed = diagnosisOutputSchema.parse(output);
+  const structured =
+    "schemaVersion" in output
+      ? pedagogicalOutputSchema.parse(output)
+      : undefined;
+  if (structured && invalidReferences(structured, discovery).length)
+    throw new Error("Fundamentação sem correspondência na descoberta.");
+  const parsed = diagnosisOutputSchema.parse(
+    structured ? projectLegacyAnalysis(structured) : output,
+  );
   // Facts come directly from the user's input, never from model speculation.
   const labels: Record<keyof Discovery, string> = {
     subject: "Assunto",
@@ -68,6 +114,13 @@ export function buildDiagnosis(
     constraints: "Restrições",
   };
   return diagnosisSchema.parse({
+    ...(structured
+      ? {
+          pedagogy: structured,
+          generatedPedagogy: structured,
+          pedagogyOrigin: "ai",
+        }
+      : {}),
     facts: Object.entries(discoverySchema.parse(discovery))
       .filter(([, value]) => value.trim())
       .map(([key, value]) => `${labels[key as keyof Discovery]}: ${value}`),
@@ -100,12 +153,26 @@ export function approveDiagnosis(
   const valid = diagnosisSchema.parse(diagnosis);
   if (
     !valid.review ||
-    !valid.analysis ||
+    (!valid.analysis && !valid.pedagogy) ||
     discoveryChanged(valid.review.sourceDiscovery, discovery)
   )
     throw new Error(
       "Revise o diagnóstico com a descoberta atual antes de aprovar.",
     );
+  if (valid.pedagogy) {
+    const rubric = evaluateDiagnosis(valid, discovery);
+    if (rubric.blocking.length) throw new Error(rubric.blocking.join(" "));
+    if (
+      !valid.review.pedagogicalReview ||
+      valid.review.pedagogicalReview.justification.trim().length < 15 ||
+      rubricIds.some(
+        (id) => !valid.review!.pedagogicalReview!.reviewedCriteria.includes(id),
+      )
+    )
+      throw new Error(
+        "Registre a revisão humana dos sete critérios e sua justificativa antes de aprovar.",
+      );
+  }
   return {
     ...valid,
     review: { ...valid.review, status: "approved", approvedAt: now },

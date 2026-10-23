@@ -60,3 +60,11 @@ Veja [docs/architecture.md](docs/architecture.md) para decisões, módulos, limi
 Uma única análise real autorizada pela Responses API foi concluída, e edição, salvamento, aprovação de teste e reabertura funcionaram com o resultado. A avaliação encontrou limitações de especificidade e de linguagem de incerteza; recomendo aprovação técnica, mas a aprovação pedagógica integral da fase permanece pendente. Veja o [relatório com o diagnóstico original](docs/validation/phase2/report.md). A aplicação continua utilizável sem chave. A equipe técnica conduz instalação, testes e integração; o responsável de produto fornece apenas credenciais em canal seguro e autorização de gasto quando necessária. Nenhuma implantação pública está autorizada.
 
 Veja [docs/operations.md](docs/operations.md) para o procedimento operacional e critérios de integração.
+
+## Aperfeiçoamento pedagógico da Fase 2
+
+O novo contrato distingue bases informadas, hipóteses, inferências fracas, restrições e possíveis pressupostos ocultos. Competências têm condição, evidência e critério; perguntas explicitam a decisão que podem mudar. A interface permite revisar, rejeitar, complementar e justificar a aprovação usando uma rubrica sem nota artificial de aprendizagem. Registros antigos continuam legíveis e podem ser adaptados sem IA, sem apagar o original.
+
+Veja a [comparação entre o diagnóstico real e a revisão técnica](docs/validation/phase2/pedagogical-refinement-v2.md) e o [contrato, compatibilidade e rubrica](docs/phase2-structured-diagnosis.md). A revisão V2 foi elaborada tecnicamente com os dados preservados: não é uma segunda geração de IA. O novo motor ainda aguarda teste real autorizado antes de aprovação pedagógica integral.
+
+Verificação adicional sem custo de API: `npm run evaluate:pedagogy`.

@@ -48,3 +48,9 @@ Autorização por código compartilhado e quotas globais em memória atendem à 
 - Categorias de hipótese podem ficar vazias para não incentivar invenções. Linhas vazias são normalizadas ao salvar, sem truncar textos humanos.
 - O envio exige consentimento sobre dados e custo. O status local de configuração é consultável sem revelar segredos e sem acionar a OpenAI.
 - O código de acesso local é preparado automaticamente em arquivo ignorado e privado, sem substituir configurações existentes. Chave externa e autorização de custo permanecem decisões humanas.
+
+## Contrato pedagógico V2 (continua na Fase 2)
+
+`domain/pedagogical-analysis.ts` separa contrato de geração completa de rascunho editável; `diagnosis-rubric.ts` aplica regras determinísticas sem eficácia numérica; `adapt-diagnosis.ts` adapta explicitamente registros anteriores, sem inventar evidência ou gravar durante leitura. A interface estruturada preserva proposta original da geração V2 e rejeições. Aprovação exige campos completos, fontes válidas, viabilidade e revisão humana justificada dos sete critérios.
+
+Mapas, estratégias e entregáveis permanecem separados e não foram desenvolvidos nesta revisão. Nenhuma nova geração foi feita; a comparação é com uma revisão técnica, não com nova saída do modelo. [Detalhes do contrato e limites](phase2-structured-diagnosis.md).

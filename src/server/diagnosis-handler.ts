@@ -7,6 +7,7 @@ import {
   diagnosisRequestSchema,
   type DiagnosisOutput,
 } from "@/domain/diagnosis";
+import type { PedagogicalAnalysis } from "@/domain/pedagogical-analysis";
 import type { Discovery } from "@/domain/models";
 import { DiagnosisProviderError } from "@/integrations/ai/diagnosis";
 import { DiagnosisLimits } from "./diagnosis-limits";
@@ -59,7 +60,7 @@ export type DiagnosisDependencies = {
     key: string,
     model: string,
     discovery: Discovery,
-  ) => Promise<DiagnosisOutput>;
+  ) => Promise<DiagnosisOutput | PedagogicalAnalysis>;
   limits: DiagnosisLimits;
 };
 export function createDiagnosisHandler(deps: DiagnosisDependencies) {

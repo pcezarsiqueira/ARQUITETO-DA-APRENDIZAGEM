@@ -15,7 +15,7 @@ test("server SDK uses matching proxy transport, shared dispatcher, fixed destina
     const direct = createOpenAIClient("fake-test-key");
     assert.equal(direct.baseURL, "https://api.openai.com/v1");
     assert.equal(direct.maxRetries, 0);
-    assert.equal(direct.timeout, 45000);
+    assert.equal(direct.timeout, 90000);
     assert.equal(direct.fetchOptions?.dispatcher, undefined);
     process.env.HTTPS_PROXY = "http://127.0.0.1:9";
     const first = createOpenAIClient("fake-test-key");
@@ -42,6 +42,21 @@ test("live browser runner refuses to spend without an explicit operational grant
     [resolve("scripts/verify-live-diagnosis.mjs")],
     {
       env: { ...process.env, LIVE_DIAGNOSIS_COST_AUTHORIZED: "" },
+      encoding: "utf8",
+    },
+  );
+  assert.equal(result.status, 2);
+  assert.match(result.stdout, /bloqueada até autorização explícita de custo/);
+});
+
+test("authorization for the first analysis cannot unlock the V2 live runner", async () => {
+  const { spawnSync } = await import("node:child_process");
+  const { resolve } = await import("node:path");
+  const result = spawnSync(
+    process.execPath,
+    [resolve("scripts/verify-live-diagnosis.mjs")],
+    {
+      env: { ...process.env, LIVE_DIAGNOSIS_COST_AUTHORIZED: "one-analysis" },
       encoding: "utf8",
     },
   );

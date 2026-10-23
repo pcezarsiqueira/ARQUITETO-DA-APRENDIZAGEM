@@ -51,6 +51,7 @@ export function updateProjectDiscovery(
         ...previous.review,
         status: "draft",
         approvedAt: undefined,
+        pedagogicalReview: undefined,
         version: previous.review.version + 1,
       },
     },

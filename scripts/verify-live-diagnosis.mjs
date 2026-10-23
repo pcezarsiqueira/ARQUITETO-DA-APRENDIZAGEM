@@ -5,8 +5,8 @@ import { spawn } from "node:child_process";
 import nextEnv from "@next/env";
 import { chromium } from "@playwright/test";
 const root = process.cwd();
-const marker = "/tmp/arquiteto-live-analysis-attempted";
-if (process.env.LIVE_DIAGNOSIS_COST_AUTHORIZED !== "one-analysis") {
+const marker = "/tmp/arquiteto-live-analysis-v2-attempted";
+if (process.env.LIVE_DIAGNOSIS_COST_AUTHORIZED !== "one-analysis-v2") {
   console.log(
     "Teste real preparado. Execução bloqueada até autorização explícita de custo.",
   );
@@ -83,7 +83,7 @@ let browser;
     (response) =>
       response.url() === origin + "/api/diagnosis" &&
       response.request().method() === "POST",
-    { timeout: 65000 },
+    { timeout: 110000 },
   );
   await page
     .getByRole("button", { name: "Analisar com IA", exact: true })
@@ -92,7 +92,7 @@ let browser;
   const payload = await response.json();
   if (!response.ok()) {
     fs.writeFileSync(
-      "/tmp/arquiteto-live-result.json",
+      "/tmp/arquiteto-live-v2-result.json",
       JSON.stringify({
         status: response.status(),
         error: payload.error,
@@ -107,7 +107,7 @@ let browser;
   const diagnosis = payload.diagnosis;
   // Preserve the sole paid result even if a later browser step fails.
   fs.writeFileSync(
-    "/tmp/arquiteto-live-result.json",
+    "/tmp/arquiteto-live-v2-result.json",
     JSON.stringify(
       {
         status: 200,
@@ -131,9 +131,19 @@ let browser;
     .fill(
       (
         "Revisão técnica de funcionamento em projeto fictício; aprovação editorial permanece com o responsável pedagógico. " +
-        diagnosis.rationale
+        (diagnosis.pedagogy?.rationale ?? diagnosis.rationale)
       ).slice(0, 1400),
     );
+  if (diagnosis.pedagogy) {
+    await page
+      .getByRole("textbox", { name: "Justificativa da sua revisão" })
+      .fill(
+        "Verificação técnica do mecanismo em caso fictício; a avaliação pedagógica substantiva é registrada separadamente pelo responsável.",
+      );
+    await page
+      .getByRole("checkbox", { name: /Revisei as sete dimensões/ })
+      .check();
+  }
   await page
     .getByRole("button", { name: "Salvar revisão", exact: true })
     .click();
@@ -167,7 +177,7 @@ let browser;
   )
     throw new Error("Persistência/revisão não confirmada.");
   fs.writeFileSync(
-    "/tmp/arquiteto-live-result.json",
+    "/tmp/arquiteto-live-v2-result.json",
     JSON.stringify(
       {
         status: 200,

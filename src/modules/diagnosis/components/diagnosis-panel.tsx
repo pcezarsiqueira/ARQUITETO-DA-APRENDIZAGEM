@@ -8,6 +8,14 @@ import {
   type Diagnosis,
   type DiagnosisOutput,
 } from "@/domain/diagnosis";
+import { StructuredDiagnosisEditor } from "./structured-diagnosis-editor";
+import { adaptLegacyDiagnosis } from "@/domain/adapt-diagnosis";
+import { evaluateDiagnosis } from "@/domain/diagnosis-rubric";
+import {
+  projectLegacyAnalysis,
+  rubricIds,
+  type AnalysisSection,
+} from "@/domain/pedagogical-analysis";
 import type { Project } from "@/domain/models";
 const groups: {
   key: keyof Omit<DiagnosisOutput, "rationale">;
@@ -69,6 +77,15 @@ export function DiagnosisPanel({
       .catch(() => {});
     return () => abort.abort();
   }, []);
+  const [approvalNote, setApprovalNote] = useState(
+    project.diagnosis?.review?.pedagogicalReview?.justification ?? "",
+  );
+  const [reviewConfirmed, setReviewConfirmed] = useState(
+    !!project.diagnosis?.review?.pedagogicalReview?.reviewedCriteria.length,
+  );
+  const rubric = proposal
+    ? evaluateDiagnosis(proposal, project.discovery)
+    : undefined;
   const [token, setToken] = useState("");
   const [consent, setConsent] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -94,6 +111,8 @@ export function DiagnosisPanel({
     ? discoveryChanged(proposal.review.sourceDiscovery, project.discovery)
     : false;
   function edit(next: Diagnosis) {
+    setApprovalNote("");
+    setReviewConfirmed(false);
     setProposal({
       ...next,
       review: next.review
@@ -101,6 +120,7 @@ export function DiagnosisPanel({
             ...next.review,
             status: "draft",
             approvedAt: undefined,
+            pedagogicalReview: undefined,
             editedByHuman: true,
           }
         : undefined,
@@ -121,7 +141,7 @@ export function DiagnosisPanel({
     setNotice("");
     const abort = new AbortController();
     controller.current = abort;
-    const timer = setTimeout(() => abort.abort(), 55_000);
+    const timer = setTimeout(() => abort.abort(), 100_000);
     try {
       const response = await fetch("/api/diagnosis", {
         method: "POST",
@@ -157,6 +177,8 @@ export function DiagnosisPanel({
       )
         throw new Error("A resposta não corresponde à descoberta atual.");
       setProposal(parsed);
+      setApprovalNote("");
+      setReviewConfirmed(false);
       setDirty(true);
       setNotice(
         "Proposta recebida. Revise e salve ou aprove; o diagnóstico anterior ainda está preservado.",
@@ -184,17 +206,19 @@ export function DiagnosisPanel({
     if (!proposal?.review) return;
     try {
       const version = (project.diagnosis?.review?.version ?? 0) + 1;
-      const analysis = proposal.analysis
-        ? {
-            ...proposal.analysis,
-            ...Object.fromEntries(
-              groups.map(({ key }) => [
-                key,
-                diagnosisLines(proposal.analysis![key].join("\n")),
-              ]),
-            ),
-          }
-        : undefined;
+      const analysis = proposal.pedagogy
+        ? projectLegacyAnalysis(proposal.pedagogy)
+        : proposal.analysis
+          ? {
+              ...proposal.analysis,
+              ...Object.fromEntries(
+                groups.map(({ key }) => [
+                  key,
+                  diagnosisLines(proposal.analysis![key].join("\n")),
+                ]),
+              ),
+            }
+          : undefined;
       const next = diagnosisSchema.parse({
         ...proposal,
         facts: diagnosisLines(proposal.facts.join("\n")),
@@ -209,7 +233,18 @@ export function DiagnosisPanel({
             ]
           : proposal.inferences,
         needsValidation: analysis?.needsValidation ?? proposal.needsValidation,
-        review: { ...proposal.review, version },
+        review: {
+          ...proposal.review,
+          version,
+          ...(proposal.pedagogy
+            ? {
+                pedagogicalReview: {
+                  reviewedCriteria: reviewConfirmed ? [...rubricIds] : [],
+                  justification: approvalNote,
+                },
+              }
+            : {}),
+        },
       });
       const reviewed = approve
         ? approveDiagnosis(next, project.discovery, new Date().toISOString())
@@ -236,7 +271,9 @@ export function DiagnosisPanel({
         );
     } catch {
       setError(
-        "Confira os campos (até 8 itens de 700 caracteres por grupo). Atualize o diagnóstico se a descoberta mudou.",
+        proposal.pedagogy
+          ? "Confira as pendências, a revisão humana e sua justificativa. Você pode salvar o rascunho mesmo incompleto."
+          : "Confira os campos (até 8 itens de 700 caracteres por grupo). Atualize o diagnóstico se a descoberta mudou.",
       );
     }
   }
@@ -270,7 +307,7 @@ export function DiagnosisPanel({
         <p className="mt-2 leading-6">
           O administrador configura a chave exclusivamente no servidor e fornece
           um código de acesso. Limites por instância: 5 chamadas/minuto, 20 em
-          24 horas e 2 simultâneas. Cada resposta tem limite de 3.000 tokens.
+          24 horas e 2 simultâneas. Cada resposta tem limite de 6.000 tokens.
           Chamadas podem gerar custo mesmo quando falham. O código abaixo não é
           sua chave OpenAI e não é salvo no projeto.
         </p>
@@ -327,7 +364,39 @@ export function DiagnosisPanel({
           {notice}
         </p>
       )}
-      {proposal?.analysis && proposal.review && (
+      {(proposal || project.diagnosis) && !proposal?.pedagogy && (
+        <div className="mt-5 rounded-lg bg-amber-50 p-4 text-sm">
+          <p>
+            Este registro usa o formato anterior. O texto permanece preservado.
+            Você pode organizá-lo no novo formato, sem IA; os campos ausentes
+            exigirão sua revisão antes da aprovação.
+          </p>
+          <button
+            disabled={busy}
+            type="button"
+            onClick={() =>
+              (() => {
+                try {
+                  edit(
+                    adaptLegacyDiagnosis(
+                      (proposal ?? project.diagnosis)!,
+                      project.discovery,
+                    ),
+                  );
+                } catch {
+                  setError(
+                    "Não foi possível organizar este registro. O diagnóstico antigo foi preservado.",
+                  );
+                }
+              })()
+            }
+            className="mt-3 font-semibold text-teal-800"
+          >
+            Organizar registro antigo, sem IA
+          </button>
+        </div>
+      )}
+      {(proposal?.analysis || proposal?.pedagogy) && proposal?.review && (
         <div className="mt-6 border-t border-stone-200 pt-5">
           <p className="text-sm font-semibold">
             {stale
@@ -339,7 +408,11 @@ export function DiagnosisPanel({
                   : "Aguardando revisão humana"}
           </p>
           <p className="mt-2 text-xs text-stone-500">
-            Origem: IA · modelo {proposal.review.model} · versão salva{" "}
+            Origem:{" "}
+            {proposal.pedagogyOrigin === "technical_adaptation"
+              ? "adaptação técnica de registro anterior, sem nova IA"
+              : "IA"}{" "}
+            · modelo de origem {proposal.review.model} · versão salva{" "}
             {project.diagnosis?.review?.version ?? 0}
             {proposal.review.editedByHuman ? " · revisado manualmente" : ""}
           </p>
@@ -361,54 +434,118 @@ export function DiagnosisPanel({
               className="w-full rounded-lg border border-stone-300 p-3 text-sm font-normal"
             />
           </label>
-          <div className="mt-5 grid gap-5 md:grid-cols-2">
-            {groups.map((group) => (
-              <label key={group.key} className="block text-sm font-semibold">
-                {group.label}
-                <p className="my-2 text-xs leading-5 font-normal text-stone-500">
-                  {group.hint} Um item por linha.
-                </p>
-                <textarea
-                  disabled={busy}
-                  value={proposal.analysis![group.key].join("\n")}
-                  onChange={(e) => {
-                    const analysis = {
-                      ...proposal.analysis!,
-                      [group.key]: e.target.value.split("\n"),
-                    };
-                    edit({
-                      ...proposal,
-                      analysis,
-                      inferences: [
-                        ...analysis.priorKnowledge,
-                        ...analysis.assumptions,
-                        ...analysis.gaps,
-                        ...analysis.barriers,
-                        ...analysis.competencies,
-                      ],
-                      needsValidation: analysis.needsValidation,
-                    });
-                  }}
-                  rows={5}
-                  maxLength={5608}
-                  className="w-full rounded-lg border border-stone-300 p-3 text-sm leading-6 font-normal"
-                />
-              </label>
-            ))}
-          </div>
+          {proposal.pedagogy && rubric ? (
+            <StructuredDiagnosisEditor
+              analysis={proposal.pedagogy}
+              discovery={project.discovery}
+              disabled={busy}
+              rubric={rubric}
+              reviewNote={approvalNote}
+              reviewConfirmed={reviewConfirmed}
+              onChange={(pedagogy) => edit({ ...proposal, pedagogy })}
+              onReject={(section: AnalysisSection, index: number) => {
+                const pedagogy = structuredClone(proposal.pedagogy!);
+                const data = JSON.stringify(pedagogy[section][index]);
+                pedagogy[section].splice(index, 1);
+                edit({
+                  ...proposal,
+                  pedagogy,
+                  rejectedItems: [
+                    ...(proposal.rejectedItems ?? []),
+                    { section, data, rejectedAt: new Date().toISOString() },
+                  ],
+                });
+              }}
+              onReview={(note, confirmed) => {
+                setApprovalNote(note);
+                setReviewConfirmed(confirmed);
+                setDirty(true);
+                setNotice("");
+                setProposal({
+                  ...proposal,
+                  review: {
+                    ...proposal.review!,
+                    status: "draft",
+                    approvedAt: undefined,
+                    editedByHuman: true,
+                  },
+                });
+              }}
+            />
+          ) : (
+            <div className="mt-5 grid gap-5 md:grid-cols-2">
+              {groups.map((group) => (
+                <label key={group.key} className="block text-sm font-semibold">
+                  {group.label}
+                  <p className="my-2 text-xs leading-5 font-normal text-stone-500">
+                    {group.hint} Um item por linha.
+                  </p>
+                  <textarea
+                    disabled={busy}
+                    value={proposal.analysis![group.key].join("\n")}
+                    onChange={(e) => {
+                      const analysis = {
+                        ...proposal.analysis!,
+                        [group.key]: e.target.value.split("\n"),
+                      };
+                      edit({
+                        ...proposal,
+                        analysis,
+                        inferences: [
+                          ...analysis.priorKnowledge,
+                          ...analysis.assumptions,
+                          ...analysis.gaps,
+                          ...analysis.barriers,
+                          ...analysis.competencies,
+                        ],
+                        needsValidation: analysis.needsValidation,
+                      });
+                    }}
+                    rows={5}
+                    maxLength={5608}
+                    className="w-full rounded-lg border border-stone-300 p-3 text-sm leading-6 font-normal"
+                  />
+                </label>
+              ))}
+            </div>
+          )}
+          {!!proposal.rejectedItems?.length && (
+            <details className="mt-4 text-sm">
+              <summary>
+                Itens rejeitados e preservados ({proposal.rejectedItems.length})
+              </summary>
+              <p className="mt-2">
+                Os itens retirados permanecem no registro e na exportação. O
+                histórico preserva versões anteriores.
+              </p>
+            </details>
+          )}
           <label className="mt-5 block text-sm font-semibold">
             Justificativa da proposta
             <textarea
               disabled={busy}
-              value={proposal.analysis.rationale}
+              value={
+                proposal.pedagogy?.rationale ??
+                proposal.analysis?.rationale ??
+                proposal.rationale
+              }
               onChange={(e) =>
                 edit({
                   ...proposal,
                   rationale: e.target.value,
-                  analysis: {
-                    ...proposal.analysis!,
-                    rationale: e.target.value,
-                  },
+                  ...(proposal.pedagogy
+                    ? {
+                        pedagogy: {
+                          ...proposal.pedagogy,
+                          rationale: e.target.value,
+                        },
+                      }
+                    : {
+                        analysis: {
+                          ...proposal.analysis!,
+                          rationale: e.target.value,
+                        },
+                      }),
                 })
               }
               maxLength={1400}
@@ -430,6 +567,10 @@ export function DiagnosisPanel({
               disabled={
                 busy ||
                 stale ||
+                (!!proposal.pedagogy &&
+                  (!!rubric?.blocking.length ||
+                    !reviewConfirmed ||
+                    approvalNote.trim().length < 15)) ||
                 (!dirty && proposal.review.status === "approved")
               }
               onClick={() => save(true)}

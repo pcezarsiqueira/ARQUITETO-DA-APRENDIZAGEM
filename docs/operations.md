@@ -28,3 +28,7 @@ Conferir também: preservação de dados anteriores, cancelamento de saída com 
 Só integrar à `main` depois de todas as verificações exigidas, teste externo autorizado e ausência de revisão/decisão humana pendente. Preparar comparação e verificar conflitos sem alterar `main` enquanto houver bloqueio. Se a API do GitHub estiver proibida, preservar branch remota e disponibilizar um único link direto de revisão; não extrair tokens nem publicar para contornar a restrição.
 
 Integração de código e publicação são operações distintas. Não criar aplicação pública, serviços pagos ou custos recorrentes sem autorização. O estágio atual continua com armazenamento no navegador, acesso compartilhado e quotas por processo; autenticação individual, persistência transacional e quotas compartilhadas são pré-requisitos de uso comercial multi-instância.
+
+## Aperfeiçoamento pedagógico V2
+
+A avaliação offline usa `npm run evaluate:pedagogy` e a suíte de regressão, sem chave ou chamadas pagas. O contrato V2 ainda não foi validado em geração real. O próximo roteiro exige autorização operacional `one-analysis-v2` após consentimento humano novo; não apagar a marca da análise anterior nem reutilizar sua autorização. Preservar resultado antes de qualquer edição. Avaliar campos e semântica pela rubrica, sem tratar verificações de estrutura como prova de qualidade. Continuar sem integrar main, publicar ou avançar à Fase 3 enquanto a validação estiver pendente.

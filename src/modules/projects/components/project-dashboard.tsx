@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   BookOpen,
@@ -21,9 +21,17 @@ import {
   type Discovery,
   type Project,
 } from "@/domain/models";
-import { createProject, duplicateProject } from "@/domain/projects";
+import {
+  createProject,
+  duplicateProject,
+  updateProjectDiscovery,
+} from "@/domain/projects";
 import { exampleProject } from "@/domain/example";
-import { loadProjects, saveProjects } from "@/persistence/projects";
+import {
+  loadProjectSnapshot,
+  saveProjects,
+  StorageConflictError,
+} from "@/persistence/projects";
 
 const fields: { key: keyof Discovery; label: string; hint: string }[] = [
   {
@@ -77,12 +85,31 @@ export function ProjectDashboard() {
   const [storageBlocked, setStorageBlocked] = useState(false);
   const [editing, setEditing] = useState<string | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
+  const storageRevision = useRef<string | null>(null);
+  const diagnosisDirty = useRef(false);
+  const onDiagnosisDirty = useCallback((dirty: boolean) => {
+    diagnosisDirty.current = dirty;
+  }, []);
+  function canLeaveDiagnosis() {
+    return (
+      !diagnosisDirty.current ||
+      confirm(
+        "Há uma revisão de diagnóstico não salva. Deseja sair e descartar essas alterações?",
+      )
+    );
+  }
+  function selectProject(id: string | null) {
+    if (canLeaveDiagnosis()) setSelected(id);
+  }
+
   useEffect(() => {
     let cancelled = false;
     Promise.resolve().then(() => {
       if (cancelled) return;
       try {
-        setProjects(loadProjects());
+        const snapshot = loadProjectSnapshot();
+        storageRevision.current = snapshot.revision;
+        setProjects(snapshot.projects);
       } catch {
         setStorageBlocked(true);
         setError(
@@ -103,13 +130,15 @@ export function ProjectDashboard() {
   function persist(next: Project[]) {
     if (storageBlocked) return false;
     try {
-      saveProjects(next);
+      storageRevision.current = saveProjects(next, storageRevision.current);
       setProjects(next);
       setError("");
       return true;
-    } catch {
+    } catch (error) {
       setError(
-        "Não foi possível salvar no navegador. Verifique o armazenamento disponível.",
+        error instanceof StorageConflictError
+          ? error.message
+          : "Não foi possível salvar no navegador. Verifique o armazenamento disponível.",
       );
       return false;
     }
@@ -134,26 +163,27 @@ export function ProjectDashboard() {
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[250px_1fr]">
       <aside className="border-r border-stone-200 bg-white px-6 py-8 lg:sticky lg:top-0 lg:h-screen">
-        <Brand />
+        <Brand onBeforeNavigate={canLeaveDiagnosis} />
         <p className="mt-12 mb-4 text-[10px] font-bold tracking-[.2em] text-stone-400">
           SEU ESPAÇO DE CRIAÇÃO
         </p>
         <nav aria-label="Navegação principal" className="space-y-2 text-sm">
           <button
-            onClick={() => setSelected(null)}
+            onClick={() => selectProject(null)}
             className="flex w-full items-center gap-3 rounded-lg bg-teal-50 px-4 py-3 font-semibold text-teal-800"
           >
             <LayoutDashboard size={18} /> Visão geral
           </button>
           <a
             href="#projetos"
-            onClick={() => setSelected(null)}
+            onClick={() => selectProject(null)}
             className="flex items-center gap-3 px-4 py-3 text-stone-600"
           >
             <BookOpen size={18} /> Meus projetos
           </a>
           <a
             href="#jornada"
+            onClick={() => selectProject(null)}
             className="flex items-center gap-3 px-4 py-3 text-stone-600"
           >
             <Compass size={18} /> A jornada
@@ -177,7 +207,7 @@ export function ProjectDashboard() {
             </span>
           </p>
           <span className="rounded-full border border-stone-200 bg-white px-3 py-1.5 text-xs text-stone-500">
-            Fundação · dados locais
+            Validação · dados locais
           </span>
         </header>
         {error && (
@@ -191,7 +221,7 @@ export function ProjectDashboard() {
         {active ? (
           <>
             <button
-              onClick={() => setSelected(null)}
+              onClick={() => selectProject(null)}
               className="mt-6 text-sm text-teal-800"
             >
               ← Voltar aos projetos
@@ -206,6 +236,7 @@ export function ProjectDashboard() {
             </p>
             <button
               onClick={() => {
+                if (!canLeaveDiagnosis()) return;
                 setDraft({ ...active.discovery });
                 setEditing(active.id);
                 setOpen(true);
@@ -230,6 +261,7 @@ export function ProjectDashboard() {
             <DiagnosisPanel
               key={`${active.id}:${JSON.stringify(active.discovery)}`}
               project={active}
+              onDirtyChange={onDiagnosisDirty}
               onSave={(diagnosis) =>
                 persist(
                   projects.map((p) =>
@@ -548,10 +580,14 @@ export function ProjectDashboard() {
                       <p className="mb-3 text-[10px] font-semibold tracking-widest text-teal-700">
                         {p.demonstration
                           ? "EXEMPLO DEMONSTRATIVO"
-                          : "EM DESCOBERTA"}
+                          : p.diagnosis?.review?.status === "approved"
+                            ? "DIAGNÓSTICO APROVADO"
+                            : p.diagnosis?.source === "ai"
+                              ? "DIAGNÓSTICO EM REVISÃO"
+                              : "EM DESCOBERTA"}
                       </p>
                       <button
-                        onClick={() => setSelected(p.id)}
+                        onClick={() => selectProject(p.id)}
                         className="text-left text-lg font-semibold hover:text-teal-700"
                       >
                         {p.title}
@@ -562,7 +598,7 @@ export function ProjectDashboard() {
                       </p>
                       <div className="mt-5 flex items-center justify-between border-t border-stone-100 pt-4">
                         <button
-                          onClick={() => setSelected(p.id)}
+                          onClick={() => selectProject(p.id)}
                           className="text-xs font-semibold text-teal-800"
                         >
                           Abrir projeto →
@@ -653,12 +689,7 @@ export function ProjectDashboard() {
               const next = editing
                 ? projects.map((p) =>
                     p.id === editing
-                      ? {
-                          ...p,
-                          discovery: valid,
-                          title: valid.subject,
-                          updatedAt: now,
-                        }
+                      ? updateProjectDiscovery(p, valid, now)
                       : p,
                   )
                 : [...projects, createProject(valid, crypto.randomUUID(), now)];

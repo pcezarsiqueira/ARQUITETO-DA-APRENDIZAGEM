@@ -1,5 +1,6 @@
 import "server-only";
 import OpenAI from "openai";
+import { getDiagnosisConfig } from "@/server/diagnosis-config";
 import { generateDiagnosis } from "@/integrations/ai/diagnosis";
 import { createDiagnosisHandler } from "@/server/diagnosis-handler";
 import { DiagnosisLimits } from "@/server/diagnosis-limits";
@@ -10,12 +11,7 @@ const processState = globalThis as typeof globalThis & {
 };
 const limits = (processState.diagnosisLimits ??= new DiagnosisLimits());
 export const POST = createDiagnosisHandler({
-  getConfig: () => ({
-    key: process.env.AI_PROVIDER_API_KEY || process.env.OPENAI_API_KEY,
-    accessToken: process.env.DIAGNOSIS_ACCESS_TOKEN,
-    model: process.env.OPENAI_DIAGNOSIS_MODEL || "gpt-4.1-mini",
-    origin: process.env.APP_ORIGIN,
-  }),
+  getConfig: getDiagnosisConfig,
   limits,
   generate: (apiKey, model, discovery) =>
     generateDiagnosis(

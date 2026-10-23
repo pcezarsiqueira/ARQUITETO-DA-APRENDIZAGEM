@@ -77,14 +77,36 @@ const schema = z.object({
   version: z.literal(1),
   projects: z.array(project).max(200),
 });
-export function loadProjects(): Project[] {
-  const raw = localStorage.getItem(key);
-  if (!raw) return [];
-  return schema.parse(JSON.parse(raw)).projects;
+export class StorageConflictError extends Error {
+  constructor() {
+    super(
+      "Os projetos foram alterados em outra aba. Exporte sua cópia antes de recarregar esta página para recuperar a versão mais recente.",
+    );
+  }
 }
-export function saveProjects(projects: Project[]) {
-  localStorage.setItem(
-    key,
-    JSON.stringify(schema.parse({ version: 1, projects })),
-  );
+export function loadProjectSnapshot(): {
+  projects: Project[];
+  revision: string | null;
+} {
+  const revision = localStorage.getItem(key);
+  return {
+    projects: revision ? schema.parse(JSON.parse(revision)).projects : [],
+    revision,
+  };
+}
+export function loadProjects(): Project[] {
+  return loadProjectSnapshot().projects;
+}
+export function saveProjects(
+  projects: Project[],
+  expectedRevision?: string | null,
+): string {
+  const next = JSON.stringify(schema.parse({ version: 1, projects }));
+  if (
+    expectedRevision !== undefined &&
+    localStorage.getItem(key) !== expectedRevision
+  )
+    throw new StorageConflictError();
+  localStorage.setItem(key, next);
+  return next;
 }

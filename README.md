@@ -18,7 +18,7 @@ Transforme conhecimento especializado em experiências de aprendizagem estrutura
 - Responses API e Structured Outputs com validação Zod.
 - Fatos derivados da entrada, hipóteses por categoria e perguntas para esclarecimento.
 - Revisão editável, aprovação humana, aviso de desatualização e histórico de até 10 versões anteriores.
-- Consentimento explícito, código de acesso, limites de uso/tokens e tratamento de falhas sem substituir dados salvos.
+- Consentimento explícito de envio e custo, código de acesso, limites de uso/tokens e tratamento de falhas sem substituir dados salvos.
 - Persistência local preservada; nenhuma geração de imagens ou novos entregáveis.
 
 ## Executar
@@ -27,6 +27,7 @@ Requer Node.js >=22 (validado em 24.19.0) e npm. Não há credenciais ou serviç
 
 ```sh
 npm ci
+npm run setup:local
 npm run dev
 ```
 
@@ -53,3 +54,9 @@ Os testes de navegador cobrem desktop e celular: criação, edição, reabertura
 ## Arquitetura e evolução
 
 Veja [docs/architecture.md](docs/architecture.md) para decisões, módulos, limites e fases verificáveis. `src/domain` contém as entidades; `src/modules/projects` a interface; `src/persistence` o adaptador local; `src/pedagogical-engine` os contratos; `src/deliverables` a regra de versões. A descoberta só é enviada à OpenAI quando o usuário autoriza explicitamente uma análise. Veja [configuração e testes de IA](docs/ai-diagnosis.md).
+
+## Estado da fase 2
+
+Diagnóstico implementado e revisado; o encerramento da fase aguarda chamada real autorizada e revisão humana. A aplicação continua utilizável sem chave. A equipe técnica conduz instalação, testes e integração; o responsável de produto fornece apenas credenciais em canal seguro e autorização de gasto quando necessária. Nenhuma implantação pública está autorizada.
+
+Veja [docs/operations.md](docs/operations.md) para o procedimento operacional e critérios de integração.

@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "node --conditions=react-server --import tsx --test tests/*.test.ts",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "setup:local": "node scripts/prepare-local-env.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.577.0",

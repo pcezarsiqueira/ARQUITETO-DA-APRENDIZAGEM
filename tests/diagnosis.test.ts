@@ -33,7 +33,7 @@ const output = {
 };
 const token = "test-access-code-with-more-than-32-characters";
 function request(
-  body: unknown = { discovery, consent: true },
+  body: unknown = { discovery, consent: true, costConsent: true },
   headers: Record<string, string> = {},
 ) {
   return new Request("http://localhost:3000/api/diagnosis", {
@@ -88,7 +88,10 @@ test("facts derive from input and hypotheses require human approval; discovery i
     ),
   );
   assert.throws(() =>
-    diagnosisOutputSchema.parse({ ...output, competencies: [] }),
+    diagnosisOutputSchema.parse({
+      ...output,
+      competencies: Array(9).fill("too many"),
+    }),
   );
   assert.throws(() =>
     diagnosisOutputSchema.parse({ ...output, extra: "unexpected" }),
@@ -177,6 +180,7 @@ test("endpoint requires server configuration, origin, authentication, JSON and c
         request({
           discovery: { ...discovery, subject: "x".repeat(161) },
           consent: true,
+          costConsent: true,
         }),
       )
     ).status,
@@ -185,12 +189,18 @@ test("endpoint requires server configuration, origin, authentication, JSON and c
   assert.equal(
     (
       await post(
-        request({ discovery, consent: true, projectId: "not-trusted" }),
+        request({
+          discovery,
+          consent: true,
+          costConsent: true,
+          projectId: "not-trusted",
+        }),
       )
     ).status,
     400,
   );
   assert.equal((await post(request({ x: "á".repeat(24_000) }))).status, 413);
+  assert.equal((await post(request({ discovery, consent: true }))).status, 400);
   assert.equal(calls, 0);
   const response = await post(request());
   assert.equal(response.status, 200);
@@ -213,7 +223,10 @@ test("endpoint sanitizes provider errors and releases concurrency on failures", 
   const throttled = handler({ limits: new DiagnosisLimits(0) });
   assert.equal((await throttled(request())).status, 429);
   const invalid = handler({
-    generate: async () => ({ ...output, competencies: [] }),
+    generate: async () => ({
+      ...output,
+      competencies: Array(9).fill("too many"),
+    }),
   });
   assert.equal((await invalid(request())).status, 502);
   const timeout = handler({

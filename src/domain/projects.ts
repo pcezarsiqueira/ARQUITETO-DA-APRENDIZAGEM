@@ -1,3 +1,4 @@
+import { discoveryChanged } from "./diagnosis";
 import { discoverySchema, type Discovery, type Project } from "./models";
 export function createProject(
   discovery: Discovery,
@@ -26,5 +27,35 @@ export function duplicateProject(
     id,
     title: `${project.title} (cópia)`,
     updatedAt: now,
+  };
+}
+
+export function updateProjectDiscovery(
+  project: Project,
+  input: Discovery,
+  now: string,
+): Project {
+  const discovery = discoverySchema.parse(input);
+  const changed = discoveryChanged(project.discovery, discovery);
+  const previous = project.diagnosis;
+  if (!changed || !previous?.review)
+    return { ...project, discovery, title: discovery.subject, updatedAt: now };
+  return {
+    ...project,
+    discovery,
+    title: discovery.subject,
+    updatedAt: now,
+    diagnosis: {
+      ...previous,
+      review: {
+        ...previous.review,
+        status: "draft",
+        approvedAt: undefined,
+        version: previous.review.version + 1,
+      },
+    },
+    diagnosisHistory: [...(project.diagnosisHistory ?? []), previous].slice(
+      -10,
+    ),
   };
 }

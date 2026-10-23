@@ -13,6 +13,9 @@ const output = {
 test("review, edit, approve, reopen and detect stale discovery without losing legacy data", async ({
   page,
 }) => {
+  await page.route("**/api/diagnosis/status", (route) =>
+    route.fulfill({ json: { configured: true } }),
+  );
   await page.goto("/");
   await page
     .getByRole("button", { name: "Explorar projeto demonstrativo" })
@@ -30,7 +33,8 @@ test("review, edit, approve, reopen and detect stale discovery without losing le
     seen++;
     const body = route.request().postDataJSON();
     expect(body.consent).toBe(true);
-    expect(Object.keys(body)).toEqual(["discovery", "consent"]);
+    expect(body.costConsent).toBe(true);
+    expect(Object.keys(body)).toEqual(["discovery", "consent", "costConsent"]);
     expect(route.request().headers().authorization).toBe(`Bearer ${code}`);
     await route.fulfill({
       json: {
@@ -45,9 +49,26 @@ test("review, edit, approve, reopen and detect stale discovery without losing le
   });
   await generate.click();
   await expect(page.getByRole("status")).toContainText("Proposta recebida");
+  await expect(
+    page.getByRole("checkbox", { name: /Autorizo enviar/ }),
+  ).not.toBeChecked();
   await page
     .getByRole("textbox", { name: /Possíveis conhecimentos prévios/ })
     .fill("Hipótese revisada pelo especialista.");
+  page.once("dialog", (dialog) => dialog.dismiss());
+  await page.getByRole("button", { name: "Voltar aos projetos" }).click();
+  await expect(
+    page.getByRole("textbox", { name: /Possíveis conhecimentos prévios/ }),
+  ).toHaveValue("Hipótese revisada pelo especialista.");
+  page.once("dialog", (dialog) => dialog.dismiss());
+  await page.getByRole("link", { name: /Arquiteto/ }).click();
+  await expect(
+    page.getByRole("textbox", { name: /Possíveis conhecimentos prévios/ }),
+  ).toHaveValue("Hipótese revisada pelo especialista.");
+  await page.getByRole("textbox", { name: /Possíveis lacunas/ }).fill("\n");
+  await page
+    .getByRole("textbox", { name: /Possíveis conhecimentos prévios/ })
+    .fill("Hipótese revisada pelo especialista.\n\n");
   await page
     .getByRole("button", { name: "Aprovar diagnóstico", exact: true })
     .click();
@@ -61,6 +82,7 @@ test("review, edit, approve, reopen and detect stale discovery without losing le
   expect(raw).not.toContain(code);
   const saved = JSON.parse(raw!).projects[0];
   expect(saved.diagnosis.review.status).toBe("approved");
+  expect(saved.diagnosis.analysis.gaps).toEqual([]);
   expect(saved.diagnosisHistory[0].source).toBe("demonstration");
   expect(saved.diagnosis.analysis.priorKnowledge).toEqual([
     "Hipótese revisada pelo especialista.",
@@ -92,6 +114,13 @@ test("review, edit, approve, reopen and detect stale discovery without losing le
   await expect(
     page.getByText(/Desatualizado: a descoberta mudou/),
   ).toBeVisible();
+  expect(
+    await page.evaluate(
+      () =>
+        JSON.parse(localStorage.getItem("arquiteto.projects.v1")!).projects[0]
+          .diagnosis.review.status,
+    ),
+  ).toBe("draft");
   await expect(
     page.getByRole("button", { name: "Aprovar diagnóstico", exact: true }),
   ).toBeDisabled();
@@ -120,4 +149,91 @@ test("unconfigured production endpoint fails closed without provider access", as
   expect(response.status()).toBe(503);
   expect(response.headers()["cache-control"]).toBe("no-store");
   expect((await response.json()).error).toContain("Configure a chave de API");
+});
+
+test("ordinary user creates a project and completes review with controlled AI", async ({
+  page,
+}) => {
+  await page.route("**/api/diagnosis/status", (route) =>
+    route.fulfill({ json: { configured: true } }),
+  );
+  await page.route("**/api/diagnosis", async (route) => {
+    const body = route.request().postDataJSON();
+    expect(body.costConsent).toBe(true);
+    expect(body.discovery.audience).toBe("Novos gestores de equipes");
+    await route.fulfill({
+      json: {
+        diagnosis: buildDiagnosis(
+          output,
+          body.discovery,
+          "controlled-test-model",
+          "2026-10-23T10:00:00.000Z",
+        ),
+      },
+    });
+  });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Criar meu projeto" }).click();
+  for (const [label, value] of [
+    [/Qual conhecimento/, "Feedback construtivo"],
+    [
+      /O que o aprendiz/,
+      "Conduzir uma conversa específica e combinar uma ação observável.",
+    ],
+    [/Quem vai aprender/, "Novos gestores de equipes"],
+    [
+      /O que esse público/,
+      "Conhecem suas equipes e ainda não praticaram feedback.",
+    ],
+    [/Quais dificuldades/, "Adiam conversas difíceis."],
+    [/Que histórias/, "Exemplo fictício de entrega atrasada."],
+    [/Já tem uma modalidade/, "Oficina presencial"],
+    [/Quais são os limites/, "60 minutos, duplas e roteiro impresso."],
+  ] as const)
+    await page.getByRole("textbox", { name: label }).fill(value);
+  await page.getByRole("button", { name: "Salvar descoberta" }).click();
+  await page
+    .getByLabel("Código de acesso ao diagnóstico")
+    .fill("controlled-test-access-code-not-a-real-secret");
+  await page.getByRole("checkbox", { name: /Autorizo enviar/ }).check();
+  await page
+    .getByRole("button", { name: "Analisar com IA", exact: true })
+    .click();
+  await expect(page.getByRole("status")).toContainText("Proposta recebida");
+  await expect(
+    page.getByRole("checkbox", { name: /Autorizo enviar/ }),
+  ).not.toBeChecked();
+  await page
+    .getByRole("textbox", { name: "Justificativa da proposta" })
+    .fill(
+      "Revisão humana: confirmar necessidades com os participantes antes de planejar a oficina.",
+    );
+  await page
+    .getByRole("button", { name: "Salvar revisão", exact: true })
+    .click();
+  await expect(
+    page.getByText("Aguardando revisão humana", { exact: true }),
+  ).toBeVisible();
+  await page.reload();
+  await page
+    .getByRole("button", { name: "Feedback construtivo", exact: true })
+    .click();
+  await expect(
+    page.getByRole("textbox", { name: "Justificativa da proposta" }),
+  ).toHaveValue(
+    "Revisão humana: confirmar necessidades com os participantes antes de planejar a oficina.",
+  );
+  await page
+    .getByRole("button", { name: "Aprovar diagnóstico", exact: true })
+    .click();
+  await expect(
+    page.getByText("Aprovado pelo especialista", { exact: true }),
+  ).toBeVisible();
+  await page.reload();
+  await page
+    .getByRole("button", { name: "Feedback construtivo", exact: true })
+    .click();
+  await expect(
+    page.getByText("Aprovado pelo especialista", { exact: true }),
+  ).toBeVisible();
 });

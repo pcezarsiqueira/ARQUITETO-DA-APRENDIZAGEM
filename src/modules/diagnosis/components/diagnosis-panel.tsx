@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   approveDiagnosis,
+  diagnosisLines,
   diagnosisSchema,
   discoveryChanged,
   type Diagnosis,
@@ -47,19 +48,46 @@ const groups: {
 export function DiagnosisPanel({
   project,
   onSave,
+  onDirtyChange,
 }: {
   project: Project;
   onSave: (diagnosis: Diagnosis) => boolean;
+  onDirtyChange?: (dirty: boolean) => void;
 }) {
   const [proposal, setProposal] = useState<Diagnosis | undefined>(
     project.diagnosis?.source === "ai" ? project.diagnosis : undefined,
   );
+  const [available, setAvailable] = useState<boolean | null>(null);
+  useEffect(() => {
+    const abort = new AbortController();
+    fetch("/api/diagnosis/status", { cache: "no-store", signal: abort.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => {
+        if (typeof data?.configured === "boolean")
+          setAvailable(data.configured);
+      })
+      .catch(() => {});
+    return () => abort.abort();
+  }, []);
   const [token, setToken] = useState("");
   const [consent, setConsent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [dirty, setDirty] = useState(false);
+  useEffect(() => {
+    onDirtyChange?.(dirty);
+    return () => onDirtyChange?.(false);
+  }, [dirty, onDirtyChange]);
+  useEffect(() => {
+    if (!dirty) return;
+    const protect = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", protect);
+    return () => window.removeEventListener("beforeunload", protect);
+  }, [dirty]);
   const controller = useRef<AbortController | null>(null);
   useEffect(() => () => controller.current?.abort(), []);
   const stale = proposal?.review
@@ -87,6 +115,8 @@ export function DiagnosisPanel({
     )
       return;
     setBusy(true);
+    // Each attempt needs fresh consent; retries may also incur provider charges.
+    setConsent(false);
     setError("");
     setNotice("");
     const abort = new AbortController();
@@ -99,17 +129,26 @@ export function DiagnosisPanel({
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ discovery: project.discovery, consent }),
+        body: JSON.stringify({
+          discovery: project.discovery,
+          consent,
+          costConsent: consent,
+        }),
         signal: abort.signal,
       });
-      const data = await response.json();
+      const data: unknown = await response.json().catch(() => null);
+      if (!data || typeof data !== "object")
+        throw new Error(
+          "O serviço não respondeu como esperado. Seu diagnóstico salvo foi preservado.",
+        );
+      const payload = data as Record<string, unknown>;
       if (!response.ok)
         throw new Error(
-          typeof data.error === "string"
-            ? data.error
+          typeof payload.error === "string"
+            ? payload.error
             : "Não foi possível concluir a análise.",
         );
-      const parsed = diagnosisSchema.parse(data.diagnosis);
+      const parsed = diagnosisSchema.parse(payload.diagnosis);
       if (
         parsed.source !== "ai" ||
         !parsed.analysis ||
@@ -124,7 +163,14 @@ export function DiagnosisPanel({
       );
     } catch (error) {
       if (!abort.signal.aborted)
-        setError(error instanceof Error ? error.message : "Falha na análise.");
+        setError(
+          error instanceof Error &&
+            !(error instanceof SyntaxError) &&
+            error.name !== "ZodError" &&
+            !(error instanceof TypeError)
+            ? error.message
+            : "Não foi possível concluir a análise. Seu diagnóstico salvo foi preservado. Tente novamente mais tarde.",
+        );
       else
         setError(
           "A solicitação foi interrompida ou excedeu o tempo limite. O diagnóstico salvo foi preservado.",
@@ -138,8 +184,31 @@ export function DiagnosisPanel({
     if (!proposal?.review) return;
     try {
       const version = (project.diagnosis?.review?.version ?? 0) + 1;
+      const analysis = proposal.analysis
+        ? {
+            ...proposal.analysis,
+            ...Object.fromEntries(
+              groups.map(({ key }) => [
+                key,
+                diagnosisLines(proposal.analysis![key].join("\n")),
+              ]),
+            ),
+          }
+        : undefined;
       const next = diagnosisSchema.parse({
         ...proposal,
+        facts: diagnosisLines(proposal.facts.join("\n")),
+        analysis,
+        inferences: analysis
+          ? [
+              ...analysis.priorKnowledge,
+              ...analysis.assumptions,
+              ...analysis.gaps,
+              ...analysis.barriers,
+              ...analysis.competencies,
+            ]
+          : proposal.inferences,
+        needsValidation: analysis?.needsValidation ?? proposal.needsValidation,
         review: { ...proposal.review, version },
       });
       const reviewed = approve
@@ -184,6 +253,16 @@ export function DiagnosisPanel({
         revisa e decide o que aprovar. A análise do planejamento não comprova
         aprendizagem real.
       </p>
+      {available === false && (
+        <p
+          role="status"
+          className="mt-4 rounded-lg bg-amber-50 p-4 text-sm text-amber-900"
+        >
+          A IA ainda não está disponível neste ambiente. Você pode criar, editar
+          e salvar projetos normalmente. A configuração fica a cargo do
+          responsável técnico.
+        </p>
+      )}
       <details className="mt-4 rounded-lg bg-stone-50 p-4 text-sm">
         <summary className="cursor-pointer font-medium">
           Configuração e limites
@@ -215,11 +294,12 @@ export function DiagnosisPanel({
           className="mt-1"
         />
         Autorizo enviar os oito campos da descoberta deste projeto à OpenAI para
-        esta análise. Revise e remova dados pessoais ou confidenciais antes de
-        enviar. Outros projetos e entregáveis não serão enviados.
+        esta análise e autorizo o custo desta chamada na conta configurada.
+        Revise e remova dados pessoais ou confidenciais antes de enviar. Outros
+        projetos e entregáveis não serão enviados.
       </label>
       <button
-        disabled={busy || !consent || !token.trim()}
+        disabled={busy || available === false || !consent || !token.trim()}
         onClick={generate}
         className="mt-4 rounded-lg bg-teal-800 px-5 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
       >

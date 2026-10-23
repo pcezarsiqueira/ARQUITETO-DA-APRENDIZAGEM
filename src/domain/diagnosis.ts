@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { discoverySchema, type Discovery } from "./models";
-const items = z.array(z.string().trim().min(1).max(700)).min(1).max(8);
+const items = z.array(z.string().trim().min(1).max(700)).max(8);
 // All fields required for strict Structured Outputs; no tools or free-form execution.
 export const diagnosisOutputSchema = z
   .object({
@@ -36,7 +36,11 @@ export const diagnosisSchema = z.object({
 });
 export type Diagnosis = z.infer<typeof diagnosisSchema>;
 export const diagnosisRequestSchema = z
-  .object({ discovery: discoverySchema, consent: z.literal(true) })
+  .object({
+    discovery: discoverySchema,
+    consent: z.literal(true),
+    costConsent: z.literal(true),
+  })
   .strict();
 export function discoveryChanged(a: Discovery, b: Discovery) {
   return (
@@ -106,4 +110,12 @@ export function approveDiagnosis(
     ...valid,
     review: { ...valid.review, status: "approved", approvedAt: now },
   };
+}
+
+/** Blank lines are editing affordances, not empty claims. Never truncate user input. */
+export function diagnosisLines(value: string): string[] {
+  return value
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
 }

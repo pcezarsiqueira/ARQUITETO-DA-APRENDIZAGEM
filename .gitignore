@@ -9,3 +9,6 @@ coverage/
 .DS_Store
 test-results/
 playwright-report/
+
+# Gerado pelo Next.js em build e desenvolvimento
+next-env.d.ts

@@ -20,7 +20,7 @@ Sem autenticação individual ou PostgreSQL nesta fase. Diagnóstico de IA dispo
 ## Fases e critérios atuais
 
 1. Fundação: concluída e publicada no repositório, sem implantação pública.
-2. Diagnóstico assistido por IA: implementação e testes locais nesta branch. Uma chamada real autorizada e a jornada de revisão já foram verificadas; encerramento integral depende da avaliação pedagógica das limitações documentadas em `docs/validation/phase2/report.md`.
+2. Diagnóstico assistido por IA: implementação e testes locais nesta branch. O primeiro teste e o teste V2 tiveram uma geração real cada, em autorizações distintas, com jornadas de revisão verificadas; encerramento integral ainda não é recomendado pelos achados em `docs/validation/phase2/v2-real/report.md`.
 3. Mapa editável: somente após validar a fase 2. Histórico imutável, aprovação humana e rastreabilidade.
 4. Arquitetura pedagógica: estratégias justificadas e seleção pelo especialista.
 5. Plano de aula e storyboard: edição por cena e atualização seletiva por versão do mapa; demais formatos futuros.
@@ -53,4 +53,4 @@ Autorização por código compartilhado e quotas globais em memória atendem à 
 
 `domain/pedagogical-analysis.ts` separa contrato de geração completa de rascunho editável; `diagnosis-rubric.ts` aplica regras determinísticas sem eficácia numérica; `adapt-diagnosis.ts` adapta explicitamente registros anteriores, sem inventar evidência ou gravar durante leitura. A interface estruturada preserva proposta original da geração V2 e rejeições. Aprovação exige campos completos, fontes válidas, viabilidade e revisão humana justificada dos sete critérios.
 
-Mapas, estratégias e entregáveis permanecem separados e não foram desenvolvidos nesta revisão. Nenhuma nova geração foi feita; a comparação é com uma revisão técnica, não com nova saída do modelo. [Detalhes do contrato e limites](phase2-structured-diagnosis.md).
+Mapas, estratégias e entregáveis permanecem separados e não foram desenvolvidos nesta revisão. A comparação editorial inicial usou uma revisão técnica sem geração. Posteriormente, uma geração V2 expressamente autorizada foi preservada em `validation/phase2/v2-real`, com testes offline de revisão e análise crítica; os dois tipos de registro permanecem distintos. [Detalhes do contrato e limites](phase2-structured-diagnosis.md).

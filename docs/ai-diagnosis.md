@@ -78,3 +78,9 @@ A avaliação recomenda aprovação técnica do mecanismo, mas não aprovação 
 O contrato atual usa `pedagogicalOutputSchema`, com objetos verificáveis e bases literais. `diagnosisOutputSchema` permanece apenas para registros e testes legados; o provedor real já não aceita aquela resposta simples como saída nova. [Contrato, rubrica e migração](phase2-structured-diagnosis.md). A projeção textual mantém a compatibilidade; a representação estruturada é a fonte atual para edição.
 
 A marca da primeira geração não foi apagada. O roteiro V2 usa uma marca distinta e exige a autorização operacional específica `one-analysis-v2`, que só deve ser configurada pela equipe após novo consentimento expresso. O antigo valor não autoriza novo teste. Nenhuma chamada paga foi executada nesta revisão. O orçamento máximo de saída e o timeout foram ampliados para comportar os objetos; informe esses limites ao obter autorização.
+
+## Atualização: teste real V2 concluído
+
+O responsável autorizou expressamente uma única nova geração com o contrato V2. Ela foi executada com descoberta idêntica, sem resposta técnica de referência, e está integralmente preservada em [validation/phase2/v2-real/report.md](validation/phase2/v2-real/report.md). A autorização está consumida; a marca V2 permanece e nenhuma repetição foi realizada. Os parágrafos anteriores que indicavam pendência descrevem o estado histórico anterior a esse teste.
+
+Edição, rejeição, complementação, revisão, aprovação de mecanismo e reabertura foram testadas com o resultado, incluindo replay offline em desktop/celular. A avaliação substantiva não recomenda aprovação pedagógica integral: estrutura válida não garante cobertura dos objetivos, perguntas sem pressuposições ou viabilidade. Não houve integração à main nem publicação. Qualquer geração futura requer nova autorização específica.

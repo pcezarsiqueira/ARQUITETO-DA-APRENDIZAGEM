@@ -1,5 +1,6 @@
 // One-shot operator harness. No secrets, requests or paid work before authorization.
 import fs from "node:fs";
+import assert from "node:assert/strict";
 import path from "node:path";
 import { spawn } from "node:child_process";
 import nextEnv from "@next/env";
@@ -62,6 +63,17 @@ let browser;
   let attempts = 0;
   await page.route("**/api/diagnosis", async (route) => {
     if (route.request().method() !== "POST") return route.continue();
+    const original = JSON.parse(
+      fs.readFileSync(
+        path.join(root, "docs/validation/phase2/diagnosis-original.json"),
+        "utf8",
+      ),
+    );
+    assert.deepEqual(
+      route.request().postDataJSON().discovery,
+      original.review.sourceDiscovery,
+      "A descoberta deve ser idêntica à original.",
+    );
     attempts++;
     if (attempts > 1) return route.abort();
     fs.writeFileSync(

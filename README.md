@@ -57,7 +57,7 @@ Veja [docs/architecture.md](docs/architecture.md) para decisões, módulos, limi
 
 ## Estado da fase 2
 
-Uma única análise real autorizada pela Responses API foi concluída, e edição, salvamento, aprovação de teste e reabertura funcionaram com o resultado. A avaliação encontrou limitações de especificidade e de linguagem de incerteza; recomendo aprovação técnica, mas a aprovação pedagógica integral da fase permanece pendente. Veja o [relatório com o diagnóstico original](docs/validation/phase2/report.md). A aplicação continua utilizável sem chave. A equipe técnica conduz instalação, testes e integração; o responsável de produto fornece apenas credenciais em canal seguro e autorização de gasto quando necessária. Nenhuma implantação pública está autorizada.
+A primeira análise real autorizada pela Responses API foi concluída, e edição, salvamento, aprovação de teste e reabertura funcionaram com o resultado. A avaliação encontrou limitações de especificidade e de linguagem de incerteza; recomendo aprovação técnica, mas a aprovação pedagógica integral da fase permanece pendente. Veja o [relatório com o diagnóstico original](docs/validation/phase2/report.md). A aplicação continua utilizável sem chave. A equipe técnica conduz instalação, testes e integração; o responsável de produto fornece apenas credenciais em canal seguro e autorização de gasto quando necessária. Nenhuma implantação pública está autorizada.
 
 Veja [docs/operations.md](docs/operations.md) para o procedimento operacional e critérios de integração.
 
@@ -65,6 +65,6 @@ Veja [docs/operations.md](docs/operations.md) para o procedimento operacional e 
 
 O novo contrato distingue bases informadas, hipóteses, inferências fracas, restrições e possíveis pressupostos ocultos. Competências têm condição, evidência e critério; perguntas explicitam a decisão que podem mudar. A interface permite revisar, rejeitar, complementar e justificar a aprovação usando uma rubrica sem nota artificial de aprendizagem. Registros antigos continuam legíveis e podem ser adaptados sem IA, sem apagar o original.
 
-Veja a [comparação entre o diagnóstico real e a revisão técnica](docs/validation/phase2/pedagogical-refinement-v2.md) e o [contrato, compatibilidade e rubrica](docs/phase2-structured-diagnosis.md). A revisão V2 foi elaborada tecnicamente com os dados preservados: não é uma segunda geração de IA. O novo motor ainda aguarda teste real autorizado antes de aprovação pedagógica integral.
+Veja a [comparação entre o diagnóstico real e a revisão técnica](docs/validation/phase2/pedagogical-refinement-v2.md) e o [contrato, compatibilidade e rubrica](docs/phase2-structured-diagnosis.md). A revisão V2 foi elaborada tecnicamente com os dados preservados: não é uma segunda geração de IA. O teste real posterior do motor V2 foi concluído com uma geração adicional expressamente autorizada. Veja o [relatório V2 com a resposta efetiva e avaliação crítica](docs/validation/phase2/v2-real/report.md): a estrutura melhorou, mas a aprovação pedagógica integral ainda não é recomendada. Não há nova geração autorizada.
 
 Verificação adicional sem custo de API: `npm run evaluate:pedagogy`.

@@ -157,5 +157,54 @@
       }
     ]
   },
-  "liveValidationOfV2": "Pendente: exige nova autorização antes de qualquer chamada paga."
+  "realV2Origin": "Resposta integral da única geração V2 autorizada, preservada sem revisão. Avaliação substantiva em v2-real/report.md.",
+  "realV2": {
+    "blocking": [],
+    "learningEffectivenessScore": null,
+    "findings": [
+      {
+        "criterion": "grounding",
+        "status": "structural_check",
+        "justification": "Trechos, justificativas e limites de inferência estão identificados. Citar um trecho não prova uma relação causal.",
+        "humanJudgment": "Verifique se o trecho realmente sustenta a hipótese e se hipóteses alternativas foram consideradas."
+      },
+      {
+        "criterion": "separation",
+        "status": "structural_check",
+        "justification": "Fatos vêm da descoberta; hipóteses e inferências fracas têm rótulos próprios, e restrições estão separadas.",
+        "humanJudgment": "Confirme que nenhuma frase da justificativa transforma uma hipótese em fato. Essas regras não detectam toda ambiguidade semântica."
+      },
+      {
+        "criterion": "observability",
+        "status": "structural_check",
+        "justification": "Ações têm condição e evidência explicitadas; isso não garante observabilidade real.",
+        "humanJudgment": "Uma pessoa conseguiria observar o comportamento e reconhecer a evidência sem adivinhar a intenção?"
+      },
+      {
+        "criterion": "criteria",
+        "status": "structural_check",
+        "justification": "Critérios e suas justificativas estão declarados, sem pontuação artificial de eficácia.",
+        "humanJudgment": "O critério diferencia desempenho suficiente de insuficiente, com exigência proporcional ao objetivo?"
+      },
+      {
+        "criterion": "questions",
+        "status": "structural_check",
+        "justification": "Cada pergunta declara informação faltante, necessidade, decisão afetada, mudança possível e prioridade.",
+        "humanJudgment": "A resposta mudaria objetivos, pré-requisitos, atividades ou avaliação? Evite perguntar novamente o que já foi informado."
+      },
+      {
+        "criterion": "assumptions",
+        "status": "structural_check",
+        "justification": "Há exemplos ligados ao conteúdo e declaração de que não são ocorrências comprovadas.",
+        "humanJudgment": "Revise familiaridade presumida, jargões, saltos, etapas omitidas e saber tácito, incluindo exemplos e explicações alternativas."
+      },
+      {
+        "criterion": "feasibility",
+        "status": "structural_check",
+        "justification": "Há vínculo declarado com o objetivo e análise de viabilidade; restrições e público precisam ser conferidos com o contexto real.",
+        "humanJudgment": "As ações cabem no tempo, modalidade e recursos sem ampliar silenciosamente o objetivo?"
+      }
+    ]
+  },
+  "liveValidationOfV2": "Executada uma geração V2 real; conformidade estrutural verificada, aprovação pedagógica integral não recomendada. Qualquer nova chamada exige outra autorização."
 }

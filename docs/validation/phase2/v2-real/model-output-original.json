@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 2,
+  "priorKnowledge": [
+    {
+      "statement": "Conhecem as rotinas da equipe, mas têm pouca prática de conversas difíceis.",
+      "status": "reported_by_specialist",
+      "basis": [
+        {
+          "field": "priorKnowledge",
+          "quote": "Conhecem as rotinas da equipe, mas têm pouca prática de conversas difíceis."
+        }
+      ],
+      "rationale": "O especialista informa diretamente que os novos gestores conhecem as rotinas da equipe, porém não estão acostumados a realizar conversas difíceis, o que indica uma base de conhecimento em processos, mas um possível déficit em habilidades comunicativas específicas.",
+      "validationQuestion": "Quais evidências específicas indicam que os novos gestores têm pouca prática em conversas difíceis?"
+    }
+  ],
+  "hypotheses": [
+    {
+      "category": "knowledge_gap",
+      "statement": "Novos gestores podem não saber como formular feedbacks específicos e sem julgamentos genéricos.",
+      "support": "grounded_hypothesis",
+      "basis": [
+        {
+          "field": "difficulties",
+          "quote": "Evitam conflitos ou usam julgamentos genéricos."
+        }
+      ],
+      "rationale": "O uso de julgamentos genéricos sugere dificuldade em articular feedbacks precisos e orientados a fatos, então pode existir uma lacuna de conhecimento sobre comunicação eficaz em feedback construtivo.",
+      "uncertainty": "Há possibilidade de que isso reflita mais um problema de habilidade do que apenas conhecimento teórico.",
+      "validationQuestion": "Que aspectos teóricos e práticos sobre feedback específico e sem julgamentos genéricos os gestores já conhecem?"
+    },
+    {
+      "category": "skill_gap",
+      "statement": "Os novos gestores podem ter dificuldade na condução de conversas orientadas a acordos, principalmente em situações de conflito.",
+      "support": "grounded_hypothesis",
+      "basis": [
+        {
+          "field": "teach",
+          "quote": "Conduzir uma conversa específica, respeitosa e orientada a acordos."
+        },
+        {
+          "field": "difficulties",
+          "quote": "Evitam conflitos"
+        }
+      ],
+      "rationale": "A evitação de conflitos e a recomendação de conduzir conversas orientadas a acordos indicam possível déficit na habilidade de mediar conflitos e negociar acordos durante feedbacks.",
+      "uncertainty": "Não está claro se a dificuldade é decorrente de falta de prática, medo, ou conhecimento sobre técnicas de mediação.",
+      "validationQuestion": "Como os gestores normalmente reagem e conduzem situações de feedback que envolvem conflito?"
+    },
+    {
+      "category": "hidden_assumption",
+      "statement": "A prática com casos fictícios (como atraso em entrega) reflete adequadamente as dificuldades reais dos gestores em situações concretas.",
+      "support": "weak_inference",
+      "basis": [
+        {
+          "field": "experiences",
+          "quote": "Caso fictício de atraso em uma entrega."
+        }
+      ],
+      "rationale": "O uso de um caso fictício presume que essa simulação traz desafios similares à realidade, mas pode não captar aspectos emocionais e complexidades reais que influenciam as conversas difíceis.",
+      "uncertainty": "A transferência de habilidades e comportamentos de situações simuladas para reais pode ser limitada.",
+      "validationQuestion": "Há evidências de que os gestores aplicam aprendizados de casos fictícios em suas práticas reais?"
+    }
+  ],
+  "constraints": [
+    {
+      "kind": "time",
+      "statement": "A oficina dura 60 minutos.",
+      "basis": [
+        {
+          "field": "constraints",
+          "quote": "60 minutos"
+        }
+      ],
+      "effectOnPlanning": "Limita o tempo disponível para práticas e aprofundamento, exigindo foco e objetividade nas atividades."
+    },
+    {
+      "kind": "modality",
+      "statement": "Oficina presencial realizada em duplas com roteiro impresso.",
+      "basis": [
+        {
+          "field": "modality",
+          "quote": "Oficina presencial"
+        },
+        {
+          "field": "constraints",
+          "quote": "duplas e roteiro impresso"
+        }
+      ],
+      "effectOnPlanning": "Exige atividades que aproveitem a interação em dupla e o uso do roteiro, restringindo dinâmicas que demandem grande grupo ou recursos digitais."
+    }
+  ],
+  "competencies": [
+    {
+      "action": "Conduzir uma conversa de feedback construtivo específica e respeitosa",
+      "condition": "Diante de uma situação de atraso em entrega apresentada em caso fictício",
+      "performanceEvidence": "O gestor utiliza exemplos concretos, evita julgamentos genéricos e mantém tom respeitoso durante a conversa simulada",
+      "successCriterion": "Observador identifica que o feedback foi claro, específico e respeitoso, sem generalizações ou ataques pessoais",
+      "criterionRationale": "Um feedback efetivo é identificado pela clareza da mensagem, foco em fatos e manutenção do respeito, fatores essenciais para aceitação pelo interlocutor",
+      "objectiveRelation": "Alinhado ao objetivo de ensinar novos gestores a conduzir conversas difíceis com eficácia",
+      "feasibility": {
+        "status": "feasible",
+        "rationale": "Apesar do tempo limitado e uso de duplas, a atividade é prática e direcionada, cabendo na duração da oficina conforme planejamento do especialista"
+      },
+      "basis": [
+        {
+          "field": "teach",
+          "quote": "Conduzir uma conversa específica, respeitosa e orientada a acordos."
+        },
+        {
+          "field": "experiences",
+          "quote": "Caso fictício de atraso em uma entrega."
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "question": "Quais exemplos concretos de dificuldades os gestores já enfrentaram em conversas difíceis?",
+      "missingInformation": "Exemplos reais de situações passadas com descrição do comportamento dos gestores",
+      "whyNeeded": "Para validar os desafios relatados e ajustar atividades às dificuldades reais",
+      "decisionImpact": "prerequisites",
+      "decisionChange": "Incluir ou ajustar conteúdo para abranger as dificuldades reais dos gestores",
+      "priority": "high"
+    },
+    {
+      "question": "Como os gestores geralmente reagem diante de feedbacks que envolvem conflito?",
+      "missingInformation": "Comportamentos observados e estratégias já utilizadas pelos gestores ao lidar com conflitos",
+      "whyNeeded": "Para entender o nível de habilidade e resistência, informando estratégias de ensino",
+      "decisionImpact": "activities",
+      "decisionChange": "Adaptar atividades para abordar reações emocionais ou técnicas de mediação específicas",
+      "priority": "high"
+    },
+    {
+      "question": "Que conhecimentos teóricos sobre feedback específico e sem julgamento os gestores já possuem?",
+      "missingInformation": "Conteúdo formal ou informal já aprendido pelos gestores sobre comunicação em feedback",
+      "whyNeeded": "Para evitar repetição desnecessária e focar em lacunas reais de conhecimento",
+      "decisionImpact": "objectives",
+      "decisionChange": "Refinar objetivos para abordar lacunas específicas de conhecimento",
+      "priority": "medium"
+    },
+    {
+      "question": "Existe alguma evidência de aplicação prática dos aprendizados obtidos em casos fictícios?",
+      "missingInformation": "Exemplos ou relatos de gestores aplicando conceitos treinados em simulações em situações reais",
+      "whyNeeded": "Para avaliar a eficácia da metodologia e a validade do caso fictício como ferramenta de ensino",
+      "decisionImpact": "assessment",
+      "decisionChange": "Incluir avaliações mais práticas ou reais se for necessário reforçar a aplicabilidade",
+      "priority": "medium"
+    }
+  ],
+  "knowledgeCurse": [
+    {
+      "kind": "familiarity",
+      "example": "Uso do termo 'conversa específica, respeitosa e orientada a acordos'",
+      "basis": [
+        {
+          "field": "teach",
+          "quote": "Conduzir uma conversa específica, respeitosa e orientada a acordos."
+        }
+      ],
+      "rationale": "O especialista pode pressupor que os novos gestores compreendem claramente o que caracteriza essas qualidades na conversa, mas tais critérios podem não estar explicitados para os aprendizes.",
+      "whyUnconfirmed": "Não há descrição detalhada do que cada termo implica na prática e nem exemplos que clarifiquem o conceito.",
+      "clarifyingQuestion": "Como os gestores definem e aplicam na prática os conceitos de 'conversa específica', 'respeitosa' e 'orientada a acordos'?"
+    }
+  ],
+  "rationale": "O especialista indica que os novos gestores conhecem as rotinas da equipe, mas têm pouca experiência em conversas difíceis, enfrentando dificuldades como evitar conflitos e usar julgamentos genéricos. Há hipóteses razoáveis sobre lacunas de conhecimento e habilidade em comunicação e mediação, e uma suposição de que o caso fictício seja representativo da realidade. A oficina é limitada a 60 minutos, realizada em duplas com roteiro impresso, o que influencia o planejamento. Os diagnósticos apresentam grau correto de incerteza, pois faltam dados detalhados sobre as práticas reais e níveis de conhecimento dos gestores, reforçando a necessidade de perguntas específicas para orientar melhor a intervenção pedagógica."
+}

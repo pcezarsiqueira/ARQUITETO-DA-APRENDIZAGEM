@@ -1,3 +1,5 @@
+import type { Diagnosis } from "./diagnosis";
+export type { Diagnosis } from "./diagnosis";
 import { z } from "zod";
 export const discoverySchema = z.object({
   subject: z.string().trim().min(1).max(160),
@@ -15,13 +17,6 @@ export type LearningObjective = {
   behavior: string;
   evidence: string;
   successCriteria: string;
-};
-export type Diagnosis = {
-  facts: string[];
-  inferences: string[];
-  needsValidation: string[];
-  source: "demonstration" | "ai";
-  rationale: string;
 };
 export type TransformationMap = {
   version: number;
@@ -75,6 +70,7 @@ export type Project = {
   updatedAt: string;
   discovery: Discovery;
   diagnosis?: Diagnosis;
+  diagnosisHistory?: Diagnosis[];
   maps: TransformationMap[];
   strategies: Strategy[];
   deliverables: Deliverable[];

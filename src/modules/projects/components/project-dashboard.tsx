@@ -13,6 +13,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import { DiagnosisPanel } from "@/modules/diagnosis/components/diagnosis-panel";
 import { Brand } from "@/shared/components/brand";
 import {
   discoverySchema,
@@ -198,8 +199,10 @@ export function ProjectDashboard() {
             <h1 className="mt-5 text-3xl font-semibold">{active.title}</h1>
             <p className="mt-3 text-sm text-stone-500">
               {active.demonstration
-                ? "Exemplo fictício editorial · não é diagnóstico de IA nem pesquisa com alunos reais."
-                : "Descoberta inicial · diagnóstico por IA ainda não disponível."}
+                ? active.diagnosis?.source === "ai"
+                  ? "Projeto demonstrativo fictício · diagnóstico assistido por IA; mapa e materiais continuam exemplos editoriais."
+                  : "Exemplo fictício editorial · não é diagnóstico de IA nem pesquisa com alunos reais."
+                : "Descoberta inicial · diagnóstico assistido por IA com revisão humana."}
             </p>
             <button
               onClick={() => {
@@ -224,7 +227,28 @@ export function ProjectDashboard() {
                 </article>
               ))}
             </section>
-            {active.diagnosis && (
+            <DiagnosisPanel
+              key={`${active.id}:${JSON.stringify(active.discovery)}`}
+              project={active}
+              onSave={(diagnosis) =>
+                persist(
+                  projects.map((p) =>
+                    p.id === active.id
+                      ? {
+                          ...p,
+                          diagnosis,
+                          diagnosisHistory: [
+                            ...(p.diagnosisHistory ?? []),
+                            ...(p.diagnosis ? [p.diagnosis] : []),
+                          ].slice(-10),
+                          updatedAt: new Date().toISOString(),
+                        }
+                      : p,
+                  ),
+                )
+              }
+            />
+            {active.diagnosis?.source === "demonstration" && (
               <section className="mt-8">
                 <h2 className="mb-4 text-xl font-semibold">
                   Diagnóstico demonstrativo
@@ -448,7 +472,11 @@ export function ProjectDashboard() {
                     <span className="text-xs text-teal-700">0{i + 1}</span>
                     <h3 className="mt-2 text-sm font-semibold">{name}</h3>
                     <p className="mt-2 text-[11px] text-stone-500">
-                      {i === 0 ? "Comece agora" : "Próxima fase"}
+                      {i === 0
+                        ? "Comece agora"
+                        : i === 1
+                          ? "IA com revisão"
+                          : "Próxima fase"}
                     </p>
                   </div>
                 ))}

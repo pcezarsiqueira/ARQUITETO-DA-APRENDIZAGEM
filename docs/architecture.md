@@ -6,7 +6,7 @@ Next.js App Router, TypeScript estrito e Tailwind. Dashboard, criação, ediçã
 
 ## Limites explícitos
 
-Sem autenticação, PostgreSQL ou chamadas externas nesta fase. O armazenamento local é por navegador, não por usuário autenticado; não use dados sensíveis em máquinas compartilhadas. Não há alegação de IA funcionando. Os conteúdos demonstrativos são estáticos e precisam de revisão humana. A fundação não satisfaz ainda todos os critérios do MVP.
+Sem autenticação individual ou PostgreSQL nesta fase. Diagnóstico de IA disponível mediante configuração e consentimento. O armazenamento local é por navegador, não por usuário autenticado; não use dados sensíveis em máquinas compartilhadas. Uma chamada externa autenticada depende de chave e orçamento configurados; testes automatizados usam transporte controlado. Os conteúdos demonstrativos são estáticos e precisam de revisão humana. A fundação não satisfaz ainda todos os critérios do MVP.
 
 ## Separação
 
@@ -28,3 +28,11 @@ Sem autenticação, PostgreSQL ou chamadas externas nesta fase. O armazenamento 
 ## Decisões
 
 Persistência local permite validar a fundação sem inventar credenciais ou provisionar infraestrutura não disponível. Migração futura deve preservar IDs e versões e exigir confirmação antes de transferir dados locais ao servidor. Não instalar Prisma sem banco de dados/configuração e fluxo de identidade definidos. Modelos e migrações serão implementados na fase 2.
+
+## Diagnóstico de IA — fase implementada nesta branch
+
+O escopo de IA foi antecipado por solicitação, mantendo a persistência local. Não foram implementados banco, geração de imagens ou novos entregáveis. A descoberta validada é enviada por Route Handler protegido para a Responses API; um schema estrito define hipóteses e perguntas. Fatos são montados diretamente da entrada. O especialista edita e aprova explicitamente a proposta; cada salvamento guarda a versão anterior e novas edições retiram a aprovação. Mudanças na descoberta sinalizam desatualização pelo snapshot de origem e impedem nova aprovação até regenerar. Não há atualização automática de mapas ou materiais.
+
+O schema de persistência mantém o envelope `arquiteto.projects.v1` e aceita diagnósticos demonstrativos antigos sem campos novos. Campos opcionais de análise, revisão e histórico permitem evolução sem apagar dados. Código de acesso nunca é persistido junto dos projetos. Não há endpoint que leia projetos locais de outros usuários.
+
+Autorização por código compartilhado e quotas globais em memória atendem à revisão desta fase, sem alegar isolamento autenticado por usuário ou uso público multi-instância. A migração futura para identidade e quotas distribuídas continua necessária. Consulte [ai-diagnosis.md](ai-diagnosis.md) para configuração, contrato, limitações, fontes e validação real.

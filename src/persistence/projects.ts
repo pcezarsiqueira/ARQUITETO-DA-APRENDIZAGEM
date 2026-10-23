@@ -1,15 +1,9 @@
+import { diagnosisSchema } from "@/domain/diagnosis";
 import { z } from "zod";
 import { discoverySchema, type Project } from "@/domain/models";
 const key = "arquiteto.projects.v1";
 const text = z.string().max(20000);
 const texts = z.array(text).max(100);
-const diagnosis = z.object({
-  facts: texts,
-  inferences: texts,
-  needsValidation: texts,
-  source: z.enum(["demonstration", "ai"]),
-  rationale: text,
-});
 const map = z.object({
   version: z.number().int().positive(),
   currentState: text,
@@ -60,7 +54,8 @@ const project: z.ZodType<Project> = z.object({
   title: text,
   updatedAt: z.iso.datetime(),
   discovery: discoverySchema,
-  diagnosis: diagnosis.optional(),
+  diagnosis: diagnosisSchema.optional(),
+  diagnosisHistory: z.array(diagnosisSchema).max(10).optional(),
   maps: z.array(map),
   strategies: z.array(strategy),
   deliverables: z.array(deliverable),

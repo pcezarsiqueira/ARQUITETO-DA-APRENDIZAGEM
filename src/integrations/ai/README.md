@@ -1,3 +1,3 @@
-# Integração futura de IA
+# Integração de diagnóstico
 
-Implementar somente no servidor após consultar a documentação oficial atual da OpenAI e configurar credenciais seguras. Nenhuma chamada externa é executada nesta fundação. Contratos em `pedagogical-engine/contracts.ts`. Ver requisitos de segurança e custos em `docs/architecture.md`.
+Implementação exclusivamente de servidor em `diagnosis.ts`, usando Responses API e Structured Outputs. Configuração, limites, consentimento e verificação em [docs/ai-diagnosis.md](../../../docs/ai-diagnosis.md). As outras funções do contrato pedagógico permanecem futuras. Não envie dados reais em testes automatizados nem use credenciais no frontend.

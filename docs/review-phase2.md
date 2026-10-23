@@ -1,5 +1,7 @@
 # Revisão da fase 2 — diagnóstico assistido por IA
 
+Este documento mantém o histórico das revisões. **Status atual:** uma única geração real autorizada foi concluída, com fluxo de revisão/persistência aprovado tecnicamente e ressalvas pedagógicas. Consulte o [relatório atual e diagnóstico original](validation/phase2/report.md).
+
 ## Resultado
 
 Implementação revisada e verificações locais aprovadas. A fase 2 NÃO está encerrada: faltam uma chamada real autorizada e a revisão humana do resultado. A fase 3 não foi iniciada. A aplicação não foi publicada. Nenhum recurso pago, cobrança recorrente ou chamada de geração paga foi criado.

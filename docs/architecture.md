@@ -20,7 +20,7 @@ Sem autenticação individual ou PostgreSQL nesta fase. Diagnóstico de IA dispo
 ## Fases e critérios atuais
 
 1. Fundação: concluída e publicada no repositório, sem implantação pública.
-2. Diagnóstico assistido por IA: implementação e testes locais nesta branch. Encerramento depende de uma chamada real autorizada e da revisão humana do resultado; testes controlados não encerram essa fase.
+2. Diagnóstico assistido por IA: implementação e testes locais nesta branch. Uma chamada real autorizada e a jornada de revisão já foram verificadas; encerramento integral depende da avaliação pedagógica das limitações documentadas em `docs/validation/phase2/report.md`.
 3. Mapa editável: somente após validar a fase 2. Histórico imutável, aprovação humana e rastreabilidade.
 4. Arquitetura pedagógica: estratégias justificadas e seleção pelo especialista.
 5. Plano de aula e storyboard: edição por cena e atualização seletiva por versão do mapa; demais formatos futuros.

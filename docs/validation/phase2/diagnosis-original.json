@@ -1,0 +1,90 @@
+{
+  "facts": [
+    "Assunto: Feedback construtivo para novos gestores",
+    "Transformação pretendida: Conduzir uma conversa específica, respeitosa e orientada a acordos.",
+    "Público: Novos gestores",
+    "Conhecimentos prévios informados: Conhecem as rotinas da equipe, mas têm pouca prática de conversas difíceis.",
+    "Dificuldades informadas: Evitam conflitos ou usam julgamentos genéricos.",
+    "Exemplos informados: Caso fictício de atraso em uma entrega.",
+    "Modalidade: Oficina presencial",
+    "Restrições: 60 minutos; duplas e roteiro impresso."
+  ],
+  "inferences": [
+    "Conhecimento das rotinas da equipe",
+    "Noção básica sobre gestão de equipe",
+    "Novos gestores entendem o que caracteriza uma conversa difícil",
+    "Sabem o que é um feedback construtivo",
+    "Estão dispostos a praticar conversas desconfortáveis",
+    "Compreendem termos como 'conversas específicas' e 'orientadas a acordos'",
+    "Falta de habilidade para conduzir conversas específicas e construtivas",
+    "Pouca prática em lidar com conflitos e evitar julgamentos genéricos",
+    "Dificuldade em transformar situações complexas em acordos claros",
+    "Medo ou desconforto diante de conversas difíceis",
+    "Tendência a evitar conflito ou usar julgamentos superficiais",
+    "Limitação do tempo disponível para prática (60 minutos)",
+    "Conduzir uma conversa de feedback específica e respeitosa",
+    "Orientar a conversa para a construção de acordos",
+    "Evitar julgamentos genéricos durante a conversa",
+    "Reconhecer e manejar situações de conflito no ambiente de trabalho"
+  ],
+  "needsValidation": [
+    "Qual o nível real de conforto dos gestores com conversas difíceis?",
+    "Eles possuem alguma experiência anterior com feedback?",
+    "Quais são suas expectativas em relação à oficina?",
+    "Há diversidade nas equipes que pode afetar a dinâmica das conversas?"
+  ],
+  "source": "ai",
+  "rationale": "A análise considera que os novos gestores conhecem as rotinas mas têm pouca prática de conversas difíceis, indicando a necessidade de desenvolver habilidades específicas de feedback construtivo. O medo de conflitos e uso de julgamentos genéricos apontam barreiras comportamentais importantes. O caso fictício e formato da oficina sugerem abordagem ativa e prática, que requer competências claras para conduzir conversas orientadas a acordos. As hipóteses precisam ser validadas para adaptar a abordagem ao perfil real dos aprendizes.",
+  "analysis": {
+    "priorKnowledge": [
+      "Conhecimento das rotinas da equipe",
+      "Noção básica sobre gestão de equipe"
+    ],
+    "assumptions": [
+      "Novos gestores entendem o que caracteriza uma conversa difícil",
+      "Sabem o que é um feedback construtivo",
+      "Estão dispostos a praticar conversas desconfortáveis",
+      "Compreendem termos como 'conversas específicas' e 'orientadas a acordos'"
+    ],
+    "gaps": [
+      "Falta de habilidade para conduzir conversas específicas e construtivas",
+      "Pouca prática em lidar com conflitos e evitar julgamentos genéricos",
+      "Dificuldade em transformar situações complexas em acordos claros"
+    ],
+    "barriers": [
+      "Medo ou desconforto diante de conversas difíceis",
+      "Tendência a evitar conflito ou usar julgamentos superficiais",
+      "Limitação do tempo disponível para prática (60 minutos)"
+    ],
+    "competencies": [
+      "Conduzir uma conversa de feedback específica e respeitosa",
+      "Orientar a conversa para a construção de acordos",
+      "Evitar julgamentos genéricos durante a conversa",
+      "Reconhecer e manejar situações de conflito no ambiente de trabalho"
+    ],
+    "needsValidation": [
+      "Qual o nível real de conforto dos gestores com conversas difíceis?",
+      "Eles possuem alguma experiência anterior com feedback?",
+      "Quais são suas expectativas em relação à oficina?",
+      "Há diversidade nas equipes que pode afetar a dinâmica das conversas?"
+    ],
+    "rationale": "A análise considera que os novos gestores conhecem as rotinas mas têm pouca prática de conversas difíceis, indicando a necessidade de desenvolver habilidades específicas de feedback construtivo. O medo de conflitos e uso de julgamentos genéricos apontam barreiras comportamentais importantes. O caso fictício e formato da oficina sugerem abordagem ativa e prática, que requer competências claras para conduzir conversas orientadas a acordos. As hipóteses precisam ser validadas para adaptar a abordagem ao perfil real dos aprendizes."
+  },
+  "review": {
+    "status": "draft",
+    "version": 1,
+    "sourceDiscovery": {
+      "subject": "Feedback construtivo para novos gestores",
+      "teach": "Conduzir uma conversa específica, respeitosa e orientada a acordos.",
+      "audience": "Novos gestores",
+      "priorKnowledge": "Conhecem as rotinas da equipe, mas têm pouca prática de conversas difíceis.",
+      "difficulties": "Evitam conflitos ou usam julgamentos genéricos.",
+      "experiences": "Caso fictício de atraso em uma entrega.",
+      "modality": "Oficina presencial",
+      "constraints": "60 minutos; duplas e roteiro impresso."
+    },
+    "generatedAt": "2026-10-23T01:21:41.360Z",
+    "model": "gpt-4.1-mini",
+    "editedByHuman": false
+  }
+}

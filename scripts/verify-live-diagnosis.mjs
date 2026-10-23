@@ -105,6 +105,27 @@ let browser;
     );
   }
   const diagnosis = payload.diagnosis;
+  // Preserve the sole paid result even if a later browser step fails.
+  fs.writeFileSync(
+    "/tmp/arquiteto-live-result.json",
+    JSON.stringify(
+      {
+        status: 200,
+        attempts,
+        diagnosis,
+        workflow: {
+          edited: false,
+          draftSaved: false,
+          reopened: false,
+          approvalMechanism: false,
+          approvalReopened: false,
+        },
+      },
+      null,
+      2,
+    ),
+    { mode: 0o600 },
+  );
   await page
     .getByRole("textbox", { name: "Justificativa da proposta" })
     .fill(
@@ -160,6 +181,7 @@ let browser;
           approvalReopened: true,
         },
         historyLength: stored.diagnosisHistory.length,
+        reviewedProject: stored,
       },
       null,
       2,

@@ -66,3 +66,9 @@ O cliente de servidor utiliza `undici` com `EnvHttpProxyAgent` quando `HTTPS_PRO
 Na continuação da preparação, a chave fornecida foi armazenada somente em arquivo local privado e ignorado pelo Git. Uma consulta autenticada de leitura confirmou acesso ao modelo usando o próprio cliente do aplicativo. Esse teste não gerou conteúdo e não valida a Responses API. A análise real continua bloqueada até autorização explícita de custo.
 
 A equipe técnica dispõe de `scripts/verify-live-diagnosis.mjs` para conduzir uma única tentativa no navegador isolado com o exemplo fictício. O script exige uma autorização operacional explícita (`LIVE_DIAGNOSIS_COST_AUTHORIZED=one-analysis`), cria uma marca de tentativa antes do envio e recusa repetições automáticas. Não deve ser executado com essa autorização sem consentimento expresso do responsável. Não imprime credenciais nem habilita publicação. Sua edição/aprovação de teste verifica o mecanismo, sem aprovar pedagogicamente o produto em nome do idealizador.
+
+## Resultado do teste real autorizado
+
+Foi executada uma única geração via Responses API com o exemplo fictício de feedback construtivo. Edição, salvamento, aprovação de teste e reabertura funcionaram com a resposta real. O original e a cópia revisada foram preservados em `docs/validation/phase2/`, sem credenciais. O [relatório](validation/phase2/report.md) reproduz o diagnóstico e distingue texto da IA de avaliação/revisão técnica.
+
+A avaliação recomenda aprovação técnica do mecanismo, mas não aprovação pedagógica integral: competências amplas sem evidências explícitas e algumas inferências redigidas com certeza excessiva precisam de revisão. Não houve nova geração para corrigir o resultado. A marca de tentativa permanece ativa; o roteiro recusa repetição. Qualquer novo teste pago exige nova autorização expressa. O PR permanece em rascunho, sem integração à main ou início da Fase 3.

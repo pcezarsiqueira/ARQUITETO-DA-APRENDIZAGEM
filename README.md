@@ -57,6 +57,6 @@ Veja [docs/architecture.md](docs/architecture.md) para decisões, módulos, limi
 
 ## Estado da fase 2
 
-Diagnóstico implementado e revisado; o encerramento da fase aguarda chamada real autorizada e revisão humana. A aplicação continua utilizável sem chave. A equipe técnica conduz instalação, testes e integração; o responsável de produto fornece apenas credenciais em canal seguro e autorização de gasto quando necessária. Nenhuma implantação pública está autorizada.
+Uma única análise real autorizada pela Responses API foi concluída, e edição, salvamento, aprovação de teste e reabertura funcionaram com o resultado. A avaliação encontrou limitações de especificidade e de linguagem de incerteza; recomendo aprovação técnica, mas a aprovação pedagógica integral da fase permanece pendente. Veja o [relatório com o diagnóstico original](docs/validation/phase2/report.md). A aplicação continua utilizável sem chave. A equipe técnica conduz instalação, testes e integração; o responsável de produto fornece apenas credenciais em canal seguro e autorização de gasto quando necessária. Nenhuma implantação pública está autorizada.
 
 Veja [docs/operations.md](docs/operations.md) para o procedimento operacional e critérios de integração.
